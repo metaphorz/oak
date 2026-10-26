@@ -262,7 +262,24 @@ export function generateOak(p, opts = {}) {
     // This makes the junction grow out of the parent instead of being a tube
     // pushed into it.
     const collar = { pts: [], radii: [], dirs: [] };
-    if (b.parentDir && lvl >= 1 && lvl <= 3) {
+    if (b.continuation) {
+      // The leader carrying on from the trunk: same point, width and heading
+      // as the trunk's end, bending gradually to its own direction. The trunk
+      // has no end cap, so there is no stump.
+      const m = 6;
+      const Lc = b.parentRadius * 2.5;
+      const cd = b.parentDir.clone();
+      for (let k = 0; k < m; k++) {
+        const u = k / m;
+        collar.pts.push(pos.clone());
+        collar.radii.push(b.parentRadius + (b.radius - b.parentRadius) * u * u * (3 - 2 * u));
+        collar.dirs.push(cd.clone());
+        bendToward(cd, b.dir, 1.2 / m);
+        pos.addScaledVector(cd, Lc / m);
+      }
+      dir.copy(cd);
+      bendToward(dir, b.dir, 1);
+    } else if (b.parentDir && lvl >= 1 && lvl <= 3) {
       const pr0 = b.parentRadius;
       const r0 = b.radius;
       const Lc = pr0 + 2.5 * r0;
@@ -542,11 +559,20 @@ export function generateOak(p, opts = {}) {
           radius = Math.max(0.006, pr * p.radiusRatio * crng.range(0.8, 1));
         }
         // Embed the base slightly in the parent so junctions have no gaps.
-        // The continuing leader matches the parent's width so the trunk flows into it.
-        if (fork && c === count - 2) radius = Math.max(radius, pr * 0.95);
+        // The continuing leader starts exactly where the trunk ends, at its
+        // width, so the trunk flows into it.
+        const continuation = fork && c === count - 2;
+        if (continuation) {
+          radius = Math.max(radius, radii[radii.length - 1] * 0.9);
+          branches[index].continued = true;
+        }
         queue.push({
-          id: hash32(b.id, c + 1), level: lvl + 1, birth, origin, dir: cdir, maxLen, radius,
-          parent: index, joint: i0 + jointOffset, parentDir: pdir.clone(), parentRadius: pr,
+          id: hash32(b.id, c + 1), level: lvl + 1, birth, dir: cdir, maxLen, radius,
+          origin: continuation ? pts[pts.length - 1].clone() : origin,
+          parent: index, joint: continuation ? pts.length - 1 + jointOffset : i0 + jointOffset,
+          parentDir: continuation ? dirs[dirs.length - 1].clone() : pdir.clone(),
+          parentRadius: continuation ? radii[radii.length - 1] : pr,
+          continuation,
         });
         childCount++;
       }
@@ -780,7 +806,7 @@ export function generateOak(p, opts = {}) {
 export function skeletonToJSON(sk) {
   const r3 = (v) => [+v.x.toFixed(4), +v.y.toFixed(4), +v.z.toFixed(4)];
   const branch = (b) => ({
-    level: b.level, root: !!b.root, dead: !!b.dead, parent: b.parent, joint: b.joint,
+    level: b.level, root: !!b.root, dead: !!b.dead, parent: b.parent, joint: b.joint, continued: !!b.continued,
     points: b.points.map(r3), radii: b.radii.map((x) => +x.toFixed(4)),
   });
   return {

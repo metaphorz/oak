@@ -105,7 +105,9 @@ export function buildBarkGeometry(sk, quality = 'high') {
         idx.push(a, a + 1, b, b, a + 1, b + 1); // outward-facing
       }
     }
-    // Rounded tip so no branch ends in an open, sawn-off tube.
+    // Rounded tip so no branch ends in an open, sawn-off tube. A branch that
+    // continues into a leader (the trunk) needs none: the leader carries on.
+    if (br.continued) continue;
     const last = points[rows - 1];
     const rEnd = radii[rows - 1];
     const tip = pos.length / 3;
