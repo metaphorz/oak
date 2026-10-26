@@ -4,17 +4,17 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 
-import { defaultParams } from './params.js?v=20261026172943';
-import { generateOak, skeletonToJSON, windVectors } from './oakGenerator.js?v=20261026172943';
-import { buildBarkGeometry, buildLeafMesh, buildMossGeometry, SPRIG, LEAF_RECTS, LEAF_ASPECT } from './oakMesher.js?v=20261026172943';
+import { defaultParams } from './params.js?v=20261026185609';
+import { generateOak, skeletonToJSON, windVectors } from './oakGenerator.js?v=20261026185609';
+import { buildBarkGeometry, buildLeafMesh, buildMossGeometry, SPRIG, LEAF_RECTS, LEAF_ASPECT } from './oakMesher.js?v=20261026185609';
 import {
   shared, createBarkMaterial, updateBarkMaterial, createLeafMaterials, updateLeafMaterial,
   createMossTexture, createMossMaterials, setMossTone, createUnderstoryMaterial,
-} from './materials.js?v=20261026172943';
-import { createRenderer, createEnvironment, updateEnvironment, animateSpray, sunDirection, ATMOSPHERES } from './scene.js?v=20261026172943';
-import { buildPanel, buildPresetSelect, compassName } from './ui.js?v=20261026172943';
-import * as backend from './backend.js?v=20261026172943';
-import { generateUnderstory, understoryToJSON } from './understory.js?v=20261026172943';
+} from './materials.js?v=20261026185609';
+import { createRenderer, createEnvironment, updateEnvironment, animateSpray, sunDirection, ATMOSPHERES } from './scene.js?v=20261026185609';
+import { buildPanel, buildPresetSelect, compassName } from './ui.js?v=20261026185609';
+import * as backend from './backend.js?v=20261026185609';
+import { generateUnderstory, understoryToJSON } from './understory.js?v=20261026185609';
 
 // ------------------------------------------------------------------ state ---
 
@@ -331,8 +331,8 @@ function renderGallery(cat) {
 // photos/manifest.local.json lists copyrighted reference photos kept only on
 // this machine (git-ignored); on GitHub Pages it is simply absent.
 Promise.all([
-  fetch('photos/manifest.json?v=20261026172943').then((r) => r.json()),
-  fetch('photos/manifest.local.json?v=20261026172943').then((r) => (r.ok ? r.json() : [])).catch(() => []),
+  fetch('photos/manifest.json?v=20261026185609').then((r) => r.json()),
+  fetch('photos/manifest.local.json?v=20261026185609').then((r) => (r.ok ? r.json() : [])).catch(() => []),
 ]).then(([list, local]) => {
   photos = [...list, ...local];
   list = photos;

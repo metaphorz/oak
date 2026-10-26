@@ -176,10 +176,12 @@ export function lightField(pos, pond) {
 // buttressing elongated along the wind axis (both windward and leeward).
 // `alpha` is the world-horizontal angle of a surface point around the trunk.
 // Duplicated verbatim in blender/build_oak.py — keep the two in sync.
-export function flareScale(p, y, alpha, trunkR, ageF) {
+export function flareScale(p, y, alpha, trunkR, ageF, lift = 0) {
   // A short root collar where the roots meet the trunk, not a tall cone.
-  const h = 0.15 + 0.3 * trunkR;
-  const F = (0.1 + 0.55 * p.rootFlare) * Math.exp(-Math.max(0, y) / h) * ageF;
+  // Massive roots lift the collar into a skirt that reaches well up the trunk,
+  // and a raised root base carries it higher still.
+  const h = (0.15 + 0.3 * trunkR) * (1 + 1.6 * (p.rootMass ?? 0)) + 0.8 * lift;
+  const F = (0.1 + 0.55 * p.rootFlare) * Math.exp(-Math.max(0, y) / h) * ageF * (1 + 0.8 * lift / trunkR);
   const axis = Math.atan2(-Math.cos(THREE.MathUtils.degToRad(p.windDir)), Math.sin(THREE.MathUtils.degToRad(p.windDir)));
   const c = Math.cos(alpha - axis);
   const w = p.buttress * p.windStrength;
@@ -724,6 +726,12 @@ export function generateOak(p, opts = {}) {
   // Each root tapers fast near the trunk (the zone of rapid taper), then
   // slowly; it snakes, rises and dips along the surface and may fork.
   const roots = [];
+  // Raised root base: many old oaks (not all) stand on a root plate lifted
+  // above the sand, the roots arching out before they dive in. Each seed
+  // takes its own share of the slider: about a third stand nearly flat.
+  const liftRng = rngFor(p.seed, 98);
+  const liftShare = liftRng() < 0.3 ? liftRng.range(0, 0.15) : liftRng.range(0.5, 1.2);
+  const rootLift = (p.rootRise ?? 0) * liftShare * trunkR * 0.9 * Math.min(1, ageF);
   if (p.rootSpread > 0 || p.rootXray) {
     const rr = rngFor(p.seed, 99);
     const n = 6 + Math.floor(rr() * 6);
@@ -733,7 +741,12 @@ export function generateOak(p, opts = {}) {
     const gaps = Array.from({ length: n }, () => rr.range(0.4, 1.6));
     const gsum = gaps.reduce((x, y) => x + y, 0);
     let phi = rr() * Math.PI * 2;
-    const grow = (start, dir0, R0, L, depth, rootRng) => {
+    // Root mass: old open-grown oaks carry roots nearly limb-thick that leave
+    // the trunk a metre or more up, sweep down and stay proud of the ground.
+    const mass = p.rootMass ?? 0;
+    const keep = 0.35 + 0.3 * mass; // how much girth survives the rapid taper
+    const grow = (start, dir0, R0, L, depth, rootRng, span = 0.35) => {
+      const y0 = start.y;
       const ns = Math.max(4, Math.round((p.rootXray ? 16 : 10) * Math.min(1, L / 4) + 3));
       const pos = start.clone();
       const dir = dir0.clone();
@@ -751,11 +764,14 @@ export function generateOak(p, opts = {}) {
         dir.normalize();
         pos.addScaledVector(dir, L / ns);
         // Rapid taper for the first ~20%, then slow.
-        const r = R0 * (0.35 + 0.65 * Math.exp(-t * 7)) * (1 - 0.8 * t);
+        const r = R0 * (keep + (1 - keep) * Math.exp(-t * 7)) * (1 - 0.8 * t);
         if (!p.rootXray) {
           // Surface roots ride along the sand, humping up and sinking in.
           const hump = Math.max(0, Math.sin(wavePh + t * waveF * Math.PI)) * r * 0.6;
-          pos.y = Math.max(-r * 0.6, r * (0.45 - 1.2 * t) + hump);
+          // A root that leaves the trunk high descends over the first part of
+          // its run (longer when the root base is raised).
+          const drop = y0 * Math.pow(Math.max(0, 1 - t / span), 2);
+          pos.y = Math.max(-r * 0.6, r * (0.45 + 0.3 * mass - 1.2 * t) + hump + drop);
         }
         pts.push(pos.clone());
         radii.push(Math.max(0.008, r));
@@ -764,7 +780,7 @@ export function generateOak(p, opts = {}) {
         if (depth === 0 && s > 1 && s < ns - 2 && rootRng() < 0.18) {
           const side = rootRng() < 0.5 ? 1 : -1;
           const d2 = dir.clone().applyAxisAngle(UP, side * rootRng.range(0.5, 1.1));
-          grow(pos.clone(), d2, r * rootRng.range(0.45, 0.7), L * (1 - t) * rootRng.range(0.4, 0.8), 1, rootRng);
+          grow(pos.clone(), d2, r * rootRng.range(0.45, 0.7), L * (1 - t) * rootRng.range(0.4, 0.8), 1, rootRng, 0.3);
         }
       }
       roots.push({ level: 1 + depth, points: pts, radii, dirs, root: true, parent: 0, joint: 0 });
@@ -772,14 +788,20 @@ export function generateOak(p, opts = {}) {
     for (let i = 0; i < n; i++) {
       phi += (gaps[i] / gsum) * Math.PI * 2;
       const ac = Math.abs(Math.cos(phi - axis));
-      // Log-normal size variation plus wind-axis reinforcement.
-      const size = (0.45 + 0.6 * p.rootSpread) * Math.exp(rr.sym(0.45)) * (0.65 + 1.1 * wAxis * ac * ac) * ageF;
-      const R0 = trunkR * 0.5 * size;
+      // Wide log-normal size variation plus wind-axis reinforcement. Length
+      // is drawn mostly independently of girth: short fat buttresses sit
+      // beside long snaking runners.
+      const size = (0.45 + 0.6 * p.rootSpread) * Math.exp(rr.sym(0.7)) * (0.65 + 1.1 * wAxis * ac * ac) * ageF;
+      let R0 = trunkR * (0.5 + 0.45 * mass) * size;
+      let L = ((p.rootXray ? 6 : 2.2 + 1.6 * mass) * trunkR * (0.8 + 0.5 * Math.min(size, 1.5)) + 0.5) * rr.range(0.35, 1.8);
+      if (rr() < 0.25) { R0 *= 0.55; L *= 1.6; } // a thin, far-reaching runner
+      R0 *= 1 + 0.5 * Math.min(1, rootLift / trunkR); // a raised base stands on stout roots
       if (R0 < 0.01) continue;
-      const L = ((p.rootXray ? 6 : 2.2) * trunkR * (0.8 + size) + 0.5) * rr.range(0.45, 1.4);
       const dir = new THREE.Vector3(Math.cos(phi), -0.05, Math.sin(phi)).normalize();
-      const start = new THREE.Vector3(Math.cos(phi) * trunkR * 0.3, 0.25 * trunkR, Math.sin(phi) * trunkR * 0.3);
-      grow(start, dir, R0, L, 0, rngFor(p.seed, 990 + i));
+      const yStart = trunkR * (0.25 + 1.3 * mass * Math.min(1, size)) + rootLift * rr.range(0.7, 1.1);
+      const start = new THREE.Vector3(Math.cos(phi) * trunkR * 0.3, yStart, Math.sin(phi) * trunkR * 0.3);
+      const span = 0.35 + 0.35 * Math.min(1, rootLift / trunkR) * rr.range(0.5, 1);
+      grow(start, dir, R0, L, 0, rngFor(p.seed, 990 + i), span);
     }
   }
 
@@ -840,6 +862,7 @@ export function generateOak(p, opts = {}) {
     moss,
     prunedTips,
     trunkRadius: trunkR,
+    rootLift,
     ageFactor: ageF,
     windYears,
     crownHeight: crownH,
@@ -866,6 +889,7 @@ export function skeletonToJSON(sk) {
     version: 1,
     params: sk.params,
     trunkRadius: sk.trunkRadius,
+    rootLift: +sk.rootLift.toFixed(4),
     ageFactor: sk.ageFactor,
     windYears: sk.windYears,
     shear: sk.shear,

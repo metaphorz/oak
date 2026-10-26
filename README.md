@@ -138,6 +138,11 @@ trunk-sized limbs, with no obvious single trunk.
 - **Low division** sets how close to the ground that split happens and how massive the first limbs
   are.
 - **Root collar** sets the short swelling at the very base.
+- **Root mass** grows the huge roots of old open-grown oaks: nearly limb-thick, leaving the trunk
+  well above the ground and staying proud of it. Roots vary widely in girth and length, from short
+  stout buttresses to long thin runners.
+- **Raised root base** lifts the root plate above the sand so the roots arch out before diving
+  in. Each seed takes its own share of it, so about a third of trees stand nearly flat.
 - **Show leaves** and **Show Spanish moss** (under *Foliage*) hide those layers to show the
   structure. Blender and Unreal follow these toggles.
 

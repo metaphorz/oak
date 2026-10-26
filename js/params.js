@@ -38,6 +38,8 @@ export const SCHEMA = [
       { key: 'trunkGnarl', label: 'Trunk twist', min: 0, max: 1, step: 0.01, value: 0.35 },
       { key: 'rootFlare', label: 'Root collar', min: 0, max: 1, step: 0.01, value: 0.55, help: 'Short swelling where the roots meet the trunk.' },
       { key: 'buttress', label: 'Wind buttressing', min: 0, max: 1, step: 0.01, value: 0.65, help: 'Roots and base thicken along the wind axis: tension roots windward, compression roots leeward.' },
+      { key: 'rootMass', label: 'Root mass', min: 0, max: 1, step: 0.01, value: 0.3, help: 'Old open-grown oaks have huge roots, almost limb-thick, that leave the trunk well above the ground and stay proud of it as they run out.' },
+      { key: 'rootRise', label: 'Raised root base', min: 0, max: 1, step: 0.01, value: 0.4, help: 'Many old oaks, not all, stand on a root base lifted above the ground. Each seed takes its own share of this, so some trees stay nearly flat.' },
       { key: 'rootSpread', label: 'Surface roots', min: 0, max: 1, step: 0.01, value: 0.55 },
       { key: 'rootXray', label: 'X-ray root plate', type: 'bool', value: false, help: 'Make the ground translucent to see the root system.' },
     ],
@@ -156,7 +158,7 @@ export const PRESETS = {
   'Grand live oak, sheltered': {
     windStrength: 0.15, saltExposure: 0.05, windLean: 0.2, flagging: 0.1, saltBurn: 0.05,
     limbLength: 17, limbCount: 9, trunkRadius: 1.0, age: 220, mossDensity: 0.8, mossLength: 1.6, limbSag: 0.65,
-    ground: 'hammock', showOcean: false, showSpray: false, limbMoss: 0.3, buttress: 0.3,
+    ground: 'hammock', showOcean: false, showSpray: false, limbMoss: 0.3, buttress: 0.3, rootMass: 0.6,
     fullness: 0.9, interiorShade: 0.55,
   },
   'Maritime forest edge': {
@@ -176,7 +178,7 @@ export const PRESETS = {
   // circumference, 78 ft tall, 180 ft spread, 200–300 years old, twelve
   // major limbs that reach the ground and curve back upward.
   'Florida champion (Alachua)': {
-    age: 260, trunkRadius: 1.14, trunkLength: 3.2, trunkHeight: 1.8, rootFlare: 0.85, buttress: 0.3, lowSplit: 0.5,
+    age: 260, trunkRadius: 1.14, trunkLength: 3.2, trunkHeight: 1.8, rootFlare: 0.85, rootMass: 0.75, rootRise: 0.6, buttress: 0.3, lowSplit: 0.5,
     limbCount: 12, limbLength: 25.5, limbAngle: 76, limbSag: 0.9, limbClearance: 0, tipUpturn: 0.85,
     windStrength: 0.15, saltExposure: 0.03, windLean: 0.1, flagging: 0.05, saltBurn: 0,
     fullness: 0.9, mossDensity: 0.75, mossLength: 1.6, lichen: 0.65, barkScars: 0.5,
@@ -186,7 +188,7 @@ export const PRESETS = {
   // cited as ~28 ft (8.5 m) circumference, ~65 ft (20 m) tall, longest limb
   // ~187 ft — approximate published figures.
   'Ancient oak (Angel Oak, ~450 yr)': {
-    age: 450, trunkRadius: 1.0, trunkLength: 2.2, trunkHeight: 1.6, lowSplit: 0.7, rootFlare: 0.8, buttress: 0.3,
+    age: 450, trunkRadius: 1.0, trunkLength: 2.2, trunkHeight: 1.6, lowSplit: 0.7, rootFlare: 0.8, rootMass: 0.9, rootRise: 0.8, buttress: 0.3,
     limbCount: 11, limbLength: 17, limbAngle: 88, limbSag: 0.95, limbClearance: 0, tipUpturn: 0.35, lightSeeking: 0.25,
     windStrength: 0.15, saltExposure: 0.03, windLean: 0.1, flagging: 0.05, saltBurn: 0,
     fullness: 0.85, mossDensity: 0.7, mossLength: 1.6, lichen: 0.7, barkScars: 0.6, sinuosity: 0.75,

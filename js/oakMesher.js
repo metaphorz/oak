@@ -5,7 +5,7 @@
 //  * Spanish moss: crossed, tapering ribbons along each hanging strand.
 
 import * as THREE from 'three';
-import { flareScale } from './oakGenerator.js?v=20261026172943';
+import { flareScale } from './oakGenerator.js?v=20261026185609';
 
 // Leaf rectangles in the ambientCG LeafSet022 atlas, in UV space (v up).
 // Measured from the opacity mask (2048px): x0, x1, yTop, yBottom in pixels.
@@ -91,7 +91,7 @@ export function buildBarkGeometry(sk, quality = 'high') {
         tmp.copy(N).multiplyScalar(Math.cos(a)).addScaledVector(B, Math.sin(a));
         let rr = r;
         if (isTrunk && c.y < 3) {
-          rr *= flareScale(p, c.y, Math.atan2(tmp.z, tmp.x), sk.trunkRadius, sk.ageFactor);
+          rr *= flareScale(p, c.y, Math.atan2(tmp.z, tmp.x), sk.trunkRadius, sk.ageFactor, sk.rootLift);
         }
         pos.push(c.x + tmp.x * rr, c.y + tmp.y * rr, c.z + tmp.z * rr);
         nor.push(tmp.x, tmp.y, tmp.z);
