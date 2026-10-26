@@ -198,7 +198,10 @@ export function generateOak(p, opts = {}) {
   const ageF = growth(age, 60) / growth(REF_AGE, 60);
   const windYears = smooth(0, 80, age); // wind shaping accumulates with age
 
-  const trunkR = Math.max(0.03, p.trunkRadius * Math.pow(age / REF_AGE, 0.8));
+  // Girth grows steadily to maturity (~75–100 years, slider values describe
+  // ~150 years), then ever more slowly: about +40% by 500 years.
+  const girth = age <= REF_AGE ? Math.pow(age / REF_AGE, 0.8) : 1 + 0.35 * Math.log(age / REF_AGE);
+  const trunkR = Math.max(0.03, p.trunkRadius * girth);
   const pond = p.pond ? pondGeometry(p) : null;
   const pondToward = (d) => {
     const h = Math.hypot(d.x, d.z);

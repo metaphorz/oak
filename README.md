@@ -146,6 +146,12 @@ trunk-sized limbs, with no obvious single trunk.
   with gentle tone variation and damp streaks. **Lichens** adds soft grey-green crustose blotches
   and, occasionally, Christmas lichen with its muted red rim (see
   [docs/florida-champion.md](docs/florida-champion.md)).
+- **Age** runs to 500 years. Southern live oaks typically live 200–300 years and reach structural
+  maturity at about 75–100. Limb growth levels off by then, and trunk girth keeps growing ever more
+  slowly (about +40% from 150 to 500 years).
+- **Ancient oak (Angel Oak, ~450 yr)** is a preset approximating the Angel Oak on Johns Island, SC:
+  8.7 m trunk circumference, about 24 m tall and 58 m across. The commonly cited figures are
+  8.5 m, about 20 m and a 57 m longest limb.
 - **Florida champion (Alachua)** is a preset matched to the 2023 state champion live oak: 11.1 m
   trunk circumference, about 24 m tall, 55 m spread, and long limbs bowing to the ground. Its dome
   shape comes from growth alone, with no salt.

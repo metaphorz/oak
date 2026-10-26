@@ -24,7 +24,7 @@ export const SCHEMA = [
     open: true,
     params: [
       { key: 'seed', label: 'Seed', min: 1, max: 9999, step: 1, value: 1913, help: 'Random seed; same seed + same sliders = same tree in every renderer.' },
-      { key: 'age', label: 'Age', min: 3, max: 250, step: 1, value: 140, unit: 'yr', help: 'Years of growth. Wind effects (lean, pruning, buttressing) accumulate with age.' },
+      { key: 'age', label: 'Age', min: 3, max: 500, step: 1, value: 140, unit: 'yr', help: 'Years of growth (southern live oaks typically live 200–300 years, up to about 500). Wind effects (lean, pruning, buttressing) accumulate with age.' },
     ],
   },
   {
@@ -180,6 +180,16 @@ export const PRESETS = {
     limbCount: 12, limbLength: 25.5, limbAngle: 76, limbSag: 0.9, limbClearance: 0, tipUpturn: 0.85,
     windStrength: 0.15, saltExposure: 0.03, windLean: 0.1, flagging: 0.05, saltBurn: 0,
     fullness: 0.9, mossDensity: 0.75, mossLength: 1.6, lichen: 0.65, barkScars: 0.5,
+    pond: false, showOcean: false, showSpray: false, ground: 'hammock', interiorShade: 0.55,
+  },
+  // Angel Oak, Johns Island SC: often estimated at 400–500 years; commonly
+  // cited as ~28 ft (8.5 m) circumference, ~65 ft (20 m) tall, longest limb
+  // ~187 ft — approximate published figures.
+  'Ancient oak (Angel Oak, ~450 yr)': {
+    age: 450, trunkRadius: 1.0, trunkLength: 2.2, trunkHeight: 1.6, lowSplit: 0.7, rootFlare: 0.8, buttress: 0.3,
+    limbCount: 11, limbLength: 17, limbAngle: 88, limbSag: 0.95, limbClearance: 0, tipUpturn: 0.35, lightSeeking: 0.25,
+    windStrength: 0.15, saltExposure: 0.03, windLean: 0.1, flagging: 0.05, saltBurn: 0,
+    fullness: 0.85, mossDensity: 0.7, mossLength: 1.6, lichen: 0.7, barkScars: 0.6, sinuosity: 0.75,
     pond: false, showOcean: false, showSpray: false, ground: 'hammock', interiorShade: 0.55,
   },
   'Live oaks by a retention pond': {
