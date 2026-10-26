@@ -23,8 +23,9 @@ cd /Users/paul/code/ameliaisland/oak
 ./stop      # stops the server and any Blender job or Unreal Editor it launched
 ```
 
-`./start [port]` frees the port if something is using it, then starts `server.js` in the
-background (log: `output/server.log`). It waits until the server answers, then opens the app.
+`./start [port]` restarts an already-running Live Oak server. If another app holds the port, it
+moves on to the next free one (8421, 8422 and so on) rather than stopping that app. It then
+starts `server.js` in the background (log: `output/server.log`). It waits until the server answers, then opens the app.
 Node.js is the only requirement; there is nothing to `npm install`.
 
 The **Blender + Unreal** tab needs this local server. It finds Blender at
@@ -42,8 +43,9 @@ The Three.js explorer is a static site (`index.html`, `css/`, `js/`, `vendor/`, 
 repository root on the `main` branch.
 
 Blender and Unreal can't run on Pages, because they need `server.js` driving locally installed
-applications. On the hosted page, the **Blender + Unreal** tab simply shows how to start the local
-server. Everything else works.
+applications. On the hosted page, the **Blender + Unreal** tab explains this. If your local server is running,
+it offers an **Open the local app** link; otherwise it tells you to run `./start`. Everything else
+works.
 
 The repository contains only the web app. These stay local:
 - `server.js`, `blender/`, `unreal/` and `tools/`;

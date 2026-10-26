@@ -189,3 +189,4 @@ body[data-engine='offline'] .pinned { right: 364px; }
   .engine-panel { position: static; width: auto; margin: 12px; display: none; }
   .stats { display: none; }
 }
+.note .open-local { color: var(--accent); font-weight: 600; }

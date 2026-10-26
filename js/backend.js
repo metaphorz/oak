@@ -21,8 +21,24 @@ export async function init({ onStatus, onOffline }) {
     state.online = true;
     onStatus(st);
   } catch {
-    onOffline();
+    onOffline(await findLocalServer());
   }
+}
+
+// On the hosted site, look for the local server (started with ./start) so we
+// can offer to open the local app, where Blender and Unreal work.
+async function findLocalServer() {
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return null;
+  for (let port = 8420; port <= 8425; port++) {
+    try {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), 800);
+      const res = await fetch(`http://localhost:${port}/api/status`, { signal: ctl.signal });
+      clearTimeout(timer);
+      if (res.ok) return `http://localhost:${port}/`;
+    } catch { /* not running on this port */ }
+  }
+  return null;
 }
 
 export const blenderBuild = (payload) => api('/api/blender/build', payload);
