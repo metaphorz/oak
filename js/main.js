@@ -127,7 +127,7 @@ function buildSkeletonLines(sk) {
 
 // Keys that only touch materials or scene dressing — no regrowth needed.
 const LIGHT_KEYS = new Set([
-  'barkScars', 'limbMoss', 'barkDarkness', 'leafDarkness', 'leafGloss', 'leafVariation', 'translucency',
+  'barkScars', 'lichen', 'limbMoss', 'barkDarkness', 'leafDarkness', 'leafGloss', 'leafVariation', 'translucency',
   'mossTone', 'sway', 'showShear', 'showSpray', 'showArrow', 'timeOfDay', 'ground', 'showOcean',
   'fog', 'exposure', 'barkSet', 'understory', 'atmosphere',
 ]);

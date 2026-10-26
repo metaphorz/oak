@@ -123,8 +123,13 @@ On the sheltered tree, south-side leaves grow from 51% to 59% as Light seeking g
   - They are defined once in `assets/atmospheres.json`, which three.js, Blender and Unreal all
     read.
   - Leaf translucency now scales with sunlight, so leaves don't glow under overcast or night skies.
-- **Scars & irregularity** (under *Bark*) adds old wounds of smooth grey wood with a dark callus
-  rim, plus lichen patches, damp streaks and broad tone variation on the trunk and every branch.
+- **Scars & splits** (under *Bark*) adds narrow, slightly darker splits running along each branch,
+  with gentle tone variation and damp streaks. **Lichens** adds soft grey-green crustose blotches
+  and, occasionally, Christmas lichen with its muted red rim (see
+  [docs/florida-champion.md](docs/florida-champion.md)).
+- **Florida champion (Alachua)** is a preset matched to the 2023 state champion live oak: 11.1 m
+  trunk circumference, about 24 m tall, 55 m spread, and long limbs bowing to the ground. Its dome
+  shape comes from growth alone, with no salt.
 - **Roots** are irregular in count, spacing, thickness and length. They taper quickly near the
   trunk, snake and hump along the surface, and occasionally fork.
 - **Spanish moss** sways more than the foliage, with a light flutter, because it weighs almost

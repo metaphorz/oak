@@ -47,7 +47,7 @@ export const SCHEMA = [
     params: [
       { key: 'limbCount', label: 'Main limbs', min: 2, max: 12, step: 1, value: 8 },
       { key: 'limbAngle', label: 'Limb angle', min: 25, max: 100, step: 1, value: 62, unit: '°', help: 'Angle from vertical. Live oak limbs are nearly horizontal.' },
-      { key: 'limbLength', label: 'Limb length', min: 3, max: 24, step: 0.1, value: 13, unit: 'm' },
+      { key: 'limbLength', label: 'Limb length', min: 3, max: 32, step: 0.1, value: 13, unit: 'm' },
       { key: 'limbSag', label: 'Limb sag', min: 0, max: 1, step: 0.01, value: 0.45, help: 'Heavy limbs droop; above ~0.8 they may rest an elbow on the ground.' },
       { key: 'limbClearance', label: 'Low limb clearance', min: 0, max: 3, step: 0.05, value: 1.0, unit: 'm', help: 'How high the lowest limbs stay. 0 lets heavy limbs rest an elbow on the ground (or dip into a pond).' },
       { key: 'lightSeeking', label: 'Light seeking', min: 0, max: 1, step: 0.01, value: 0.5, help: 'Shoots grow toward the light field: open sky above, the southern sun path (30.6°N), and skylight plus reflected light over open water.' },
@@ -113,7 +113,8 @@ export const SCHEMA = [
       { key: 'barkSet', label: 'Bark texture', type: 'select', options: BARK_SETS, value: 'jolcham_oak_bark_01' },
       { key: 'barkScale', label: 'Texture scale', min: 0.3, max: 3, step: 0.05, value: 1.1, unit: 'm' },
       { key: 'barkDarkness', label: 'Bark darkness', min: 0, max: 1, step: 0.01, value: 0.35 },
-      { key: 'barkScars', label: 'Scars & irregularity', min: 0, max: 1, step: 0.01, value: 0.45, help: 'Old wounds where bark has fallen away (grey, smooth wood with a callus rim), plus lichen patches and damp streaks that break up the repeating bark texture.' },
+      { key: 'barkScars', label: 'Scars & splits', min: 0, max: 1, step: 0.01, value: 0.35, help: 'Narrow splits where bark has cracked or lifted, showing darker weathered wood, plus gentle tone variation and damp streaks.' },
+      { key: 'lichen', label: 'Lichens', min: 0, max: 1, step: 0.01, value: 0.5, help: 'Pale grey-green crustose lichen blotches, and here and there Christmas lichen (Cryptothecia rubrocincta, a Florida species) with its muted red rim.' },
       { key: 'limbMoss', label: 'Limb moss & fern', min: 0, max: 1, step: 0.01, value: 0.35, help: 'Green moss and resurrection fern on the upper faces of limbs.' },
     ],
   },
@@ -167,6 +168,16 @@ export const PRESETS = {
   'Wind-swept, bent by salt wind': {
     windStrength: 0.95, saltExposure: 0.75, shearAngle: 18, windLean: 1, flagging: 0.7, saltBurn: 0.5,
     trunkLength: 4.2, trunkGnarl: 0.5, limbAngle: 55, fullness: 0.6, mossDensity: 0.3, buttress: 0.9, age: 160,
+  },
+  // Florida state champion live oak, Alachua (WUFT, 4 Oct 2023): 36.5 ft
+  // circumference, 78 ft tall, 180 ft spread, 200–300 years old, twelve
+  // major limbs that reach the ground and curve back upward.
+  'Florida champion (Alachua)': {
+    age: 260, trunkRadius: 1.14, trunkLength: 3.2, trunkHeight: 1.8, rootFlare: 0.85, buttress: 0.3,
+    limbCount: 12, limbLength: 25.5, limbAngle: 76, limbSag: 0.9, limbClearance: 0, tipUpturn: 0.85,
+    windStrength: 0.15, saltExposure: 0.03, windLean: 0.1, flagging: 0.05, saltBurn: 0,
+    fullness: 0.9, mossDensity: 0.75, mossLength: 1.6, lichen: 0.65, barkScars: 0.5,
+    pond: false, showOcean: false, showSpray: false, ground: 'hammock', interiorShade: 0.55,
   },
   'Live oaks by a retention pond': {
     pond: true, pondDir: 200, windStrength: 0.25, saltExposure: 0.1, flagging: 0.15, windLean: 0.15,

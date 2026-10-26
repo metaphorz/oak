@@ -62,7 +62,8 @@ export function createBarkMaterial(p) {
     roughness: 1.0,
   });
   const u = {
-    uScars: { value: p.barkScars ?? 0.45 },
+    uScars: { value: p.barkScars ?? 0.35 },
+    uLichen: { value: p.lichen ?? 0.5 },
     uLimbMoss: { value: p.limbMoss },
     uBarkDark: { value: p.barkDarkness },
     uDisp: { value: tex(`${base}_disp_2k.jpg`) },
@@ -81,6 +82,7 @@ export function createBarkMaterial(p) {
         uniform float uLimbMoss;
         uniform float uBarkDark;
         uniform float uScars;
+        uniform float uLichen;
         uniform sampler2D uDisp;
         varying vec3 vBarkW;
         float bHash(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
@@ -94,23 +96,37 @@ export function createBarkMaterial(p) {
       .replace('#include <map_fragment>', `#include <map_fragment>
         float disp = texture2D(uDisp, vMapUv).r;
         diffuseColor.rgb *= mix(1.0, 0.55, uBarkDark);
-        // Irregularity: broad tone variation, grey lichen patches and damp
-        // streaks running down the bark, so the photo texture never repeats visibly.
+        // Irregularity: gentle broad tone variation and damp streaks, so the
+        // photo texture never repeats visibly.
         float tone = bFbm(vBarkW * 0.45);
-        diffuseColor.rgb *= 1.0 + (tone - 0.5) * 0.5 * uScars;
-        float lichen = smoothstep(0.6, 0.75, bFbm(vBarkW * 0.9 + 7.3)) * uScars;
-        diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.55, 0.57, 0.5) * (0.7 + 0.5 * disp), lichen * 0.55);
+        diffuseColor.rgb *= 1.0 + (tone - 0.5) * 0.35 * uScars;
         float streak = smoothstep(0.55, 0.8, bNoise(vec3(vBarkW.x * 2.5, vBarkW.y * 0.25, vBarkW.z * 2.5))) * uScars;
-        diffuseColor.rgb *= 1.0 - 0.3 * streak;
-        // Scars: occasional old wounds where bark has fallen away, exposing
-        // smoother grey wood, ringed by a darker swollen callus.
-        float sn = bFbm(vBarkW * vec3(1.1, 0.55, 1.1) + 31.0);
-        float thr = 0.74 - 0.12 * uScars;
-        float scar = smoothstep(thr, thr + 0.02, sn) * step(0.01, uScars);
-        float rim = (smoothstep(thr - 0.05, thr, sn) - scar) * step(0.01, uScars);
-        vec3 wood = vec3(0.47, 0.42, 0.36) * (0.8 + 0.4 * bNoise(vBarkW * vec3(30.0, 3.0, 30.0)));
-        diffuseColor.rgb = mix(diffuseColor.rgb, wood, scar);
-        diffuseColor.rgb *= 1.0 - 0.35 * rim;
+        diffuseColor.rgb *= 1.0 - 0.18 * streak;
+        // Scars: narrow splits running along the branch (bark UV v = length),
+        // showing dark weathered wood with a slightly darker lifted edge. Low
+        // contrast, as on real oak bark.
+        float sn = bNoise(vec3(vMapUv.x * 3.0, vMapUv.y * 0.35, 5.0)) * 0.65 + bNoise(vec3(vMapUv.x * 9.0, vMapUv.y * 1.2, 9.0)) * 0.35;
+        float thr = 0.8 - 0.1 * uScars;
+        float scar = smoothstep(thr, thr + 0.05, sn) * step(0.01, uScars);
+        float rim = (smoothstep(thr - 0.06, thr, sn) - scar) * step(0.01, uScars);
+        vec3 wood = diffuseColor.rgb * vec3(0.72, 0.66, 0.6);
+        diffuseColor.rgb = mix(diffuseColor.rgb, wood, scar * 0.75);
+        diffuseColor.rgb *= 1.0 - 0.15 * rim;
+        // Lichens. Crustose lichens: soft, blotchy pale grey-green patches,
+        // mottled inside, low contrast against grey bark.
+        float ln = bFbm(vBarkW * 3.2 + 7.3);
+        float lmask = smoothstep(0.7 - 0.12 * uLichen, 0.8 - 0.12 * uLichen, ln) * step(0.01, uLichen);
+        float speck = bNoise(vBarkW * 26.0);
+        // Tinted relative to the local bark so it stays a soft mottling.
+        vec3 lichenCol = mix(diffuseColor.rgb * 1.35, vec3(0.5, 0.53, 0.46), 0.45);
+        diffuseColor.rgb = mix(diffuseColor.rgb, lichenCol, lmask * 0.55 * (0.5 + 0.5 * speck));
+        // Christmas lichen (Cryptothecia rubrocincta), occasional: pale
+        // grey-green crust with a muted red-pink rim.
+        float cn = bFbm(vBarkW * 1.6 + 53.0);
+        float cIn = smoothstep(0.78, 0.8, cn) * step(0.01, uLichen) * smoothstep(0.2, 0.6, uLichen);
+        float cRim = (smoothstep(0.75, 0.78, cn) - cIn) * step(0.01, uLichen) * smoothstep(0.2, 0.6, uLichen);
+        diffuseColor.rgb = mix(diffuseColor.rgb, mix(diffuseColor.rgb * 1.3, vec3(0.55, 0.58, 0.52), 0.5), cIn * 0.5);
+        diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.55, 0.33, 0.3), cRim * 0.35);
         // Moss and resurrection fern settle on upward faces and in bark furrows.
         float up = vWorldN.y + (0.5 - disp) * 0.7;
         float mossAmt = smoothstep(0.8 - uLimbMoss * 1.0, 1.1 - uLimbMoss * 0.7, up) * min(1.0, uLimbMoss * 1.15);
@@ -118,17 +134,18 @@ export function createBarkMaterial(p) {
         diffuseColor.rgb = mix(diffuseColor.rgb, mossCol, mossAmt);`)
       .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
         roughnessFactor = mix(roughnessFactor, 0.95, mossAmt);
-        roughnessFactor = mix(roughnessFactor, 0.7, scar);`)
+        roughnessFactor = mix(roughnessFactor, 0.85, lmask * 0.5);`)
       .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
         // Exposed wood is smooth: flatten the bark relief inside scars.
-        normal = normalize(mix(normal, nonPerturbedNormal, scar * 0.85));`);
+        normal = normalize(mix(normal, nonPerturbedNormal, scar * 0.4));`);
   };
   mat.customProgramCacheKey = () => 'oakbark';
   return mat;
 }
 
 export function updateBarkMaterial(mat, p) {
-  mat.userData.uniforms.uScars.value = p.barkScars ?? 0.45;
+  mat.userData.uniforms.uScars.value = p.barkScars ?? 0.35;
+  mat.userData.uniforms.uLichen.value = p.lichen ?? 0.5;
   mat.userData.uniforms.uLimbMoss.value = p.limbMoss;
   mat.userData.uniforms.uBarkDark.value = p.barkDarkness;
 }

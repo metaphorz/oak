@@ -315,7 +315,10 @@ export function generateOak(p, opts = {}) {
         // Over open water heavy limbs droop from the start.
         const archBase = lvl === 1 ? smooth(0.08, 0.35, t) * (1.15 - t) : 1 - t;
         const arch = archBase + (1 - archBase) * towardPond * 0.8;
-        const sag = p.limbSag * (lvl === 1 ? 1.25 : 0.5) * arch * 0.16 * (0.3 + flex) * (1 + 2.2 * towardPond);
+        // Very long, heavy main limbs bow to the ground over the decades (the
+        // Alachua champion's twelve limbs all do) — only when clearance allows.
+        const lengthSag = lvl === 1 ? smooth(8, 22, b.maxLen) * smooth(0.55, 0.9, hl) * Math.max(0, 1 - (p.limbClearance ?? 1)) : 0;
+        const sag = p.limbSag * (lvl === 1 ? 1.25 : 0.5) * arch * 0.16 * (0.3 + flex + 1.6 * lengthSag) * (1 + 2.2 * towardPond);
         const up = p.tipUpturn * t * t * (lvl === 1 ? 0.22 : 0.12) * (1 - 0.85 * towardPond);
         bendToward(dir, DOWN, sag);
         bendToward(dir, UP, up);
