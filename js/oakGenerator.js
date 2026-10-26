@@ -255,6 +255,31 @@ export function generateOak(p, opts = {}) {
     const pos = b.origin.clone();
     const dir = b.dir.clone();
     const omega = new THREE.Vector3();
+    // Branch collar: the branch starts on its parent's axis heading partly
+    // along the parent, curves out to its own direction, and its base swells
+    // where it meets the parent, tapering back over a couple of diameters.
+    // This makes the junction grow out of the parent instead of being a tube
+    // pushed into it.
+    const collar = { pts: [], radii: [], dirs: [] };
+    if (b.parentDir && lvl >= 1 && lvl <= 3) {
+      const pr0 = b.parentRadius;
+      const r0 = b.radius;
+      const Lc = pr0 + 2.5 * r0;
+      const m = lvl === 1 ? 7 : 4;
+      const cd = b.parentDir.clone().lerp(b.dir, 0.35).normalize();
+      for (let k = 0; k < m; k++) {
+        const sDist = (k / m) * Lc;
+        const outside = Math.max(0, sDist - pr0 * 0.8);
+        const swell = 1 + 0.75 * Math.exp(-outside / (1.2 * r0));
+        collar.pts.push(pos.clone());
+        collar.radii.push(Math.min(pr0 * 0.97, r0 * swell));
+        collar.dirs.push(cd.clone());
+        bendToward(cd, b.dir, 1.4 / m);
+        pos.addScaledVector(cd, Lc / m);
+      }
+      dir.copy(cd);
+      bendToward(dir, b.dir, 1);
+    }
     const pts = [pos.clone()];
     const radii = [b.radius];
     const dirs = [dir.clone()];
@@ -405,7 +430,11 @@ export function generateOak(p, opts = {}) {
     const index = branches.length;
     // parent/joint make the skeleton a true graph: this branch hangs off
     // joint `joint` of branch `parent` (-1 for the trunk).
-    branches.push({ level: lvl, points: pts, radii, dirs, pruned, root: false, parent: b.parent, joint: b.joint });
+    branches.push({
+      level: lvl, pruned, root: false, parent: b.parent, joint: b.joint,
+      points: [...collar.pts, ...pts], radii: [...collar.radii, ...radii], dirs: [...collar.dirs, ...dirs],
+    });
+    const jointOffset = collar.pts.length;
 
     if (pruned && !b.hedge) {
       const tip = pts[pts.length - 1];
@@ -506,8 +535,12 @@ export function generateOak(p, opts = {}) {
           radius = Math.max(0.006, pr * p.radiusRatio * crng.range(0.8, 1));
         }
         // Embed the base slightly in the parent so junctions have no gaps.
-        origin.addScaledVector(cdir, -pr * 0.4);
-        queue.push({ id: hash32(b.id, c + 1), level: lvl + 1, birth, origin, dir: cdir, maxLen, radius, parent: index, joint: i0 });
+        // The continuing leader matches the parent's width so the trunk flows into it.
+        if (fork && c === count - 2) radius = Math.max(radius, pr * 0.95);
+        queue.push({
+          id: hash32(b.id, c + 1), level: lvl + 1, birth, origin, dir: cdir, maxLen, radius,
+          parent: index, joint: i0 + jointOffset, parentDir: pdir.clone(), parentRadius: pr,
+        });
         childCount++;
       }
     }
