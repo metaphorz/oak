@@ -191,7 +191,7 @@ export function flareScale(p, y, alpha, trunkR, ageF) {
 export function generateOak(p, opts = {}) {
   const t0 = performance.now();
   const quality = opts.quality || p.quality || 'high';
-  const leafCap = { draft: 35000, high: 150000, ultra: 260000 }[quality];
+  const leafCap = { draft: 45000, high: 200000, ultra: 320000 }[quality];
   const full = p.fullness ?? 0.75;
   const age = p.age;
   const wind = windVectors(p);
@@ -319,7 +319,8 @@ export function generateOak(p, opts = {}) {
       const t = i / n;
       // Linear taper, then the last quarter narrows smoothly to twig size so
       // no limb ends in a blunt, sawn-off tip (the trunk ends inside its fork).
-      const tail = lvl >= 1 ? smooth(0.72, 1, t) : 0;
+      // Only twigs narrow to a point; bigger wood ends by dividing (below).
+      const tail = isTwig ? smooth(0.72, 1, t) : 0;
       const r = (b.radius * (1 - taper * t) * (1 - tail) + Math.max(0.006, Math.min(0.02, b.radius * 0.15)) * tail) * stunt;
 
       // Sinuous wandering: random angular impulses with momentum give the
@@ -596,6 +597,32 @@ export function generateOak(p, opts = {}) {
           parentDir: continuation ? dirs[dirs.length - 1].clone() : pdir.clone(),
           parentRadius: continuation ? radii[radii.length - 1] : pr,
           continuation,
+        });
+        childCount++;
+      }
+    }
+
+    // A limb never just stops: its tip divides into a fan of smaller
+    // branches that carry on outward (and finally into leafy twigs). Limbs
+    // checked by salt end in a dense tuft instead of a bare horn.
+    if (lvl >= 1 && lvl < p.levels && !b.hedge && !pruned && pts.length > 1) {
+      const tip = pts[pts.length - 1];
+      const tdir = dirs[dirs.length - 1];
+      const rTip = radii[radii.length - 1];
+      const nFork = stunt < 0.95 ? 5 : 3;
+      const trng = rngFor(p.seed, hash32(b.id, 3131));
+      for (let k = 0; k < nFork; k++) {
+        const side = anyPerpendicular(tdir).applyAxisAngle(tdir, trng() * Math.PI * 2);
+        const fd = tdir.clone().applyAxisAngle(side, THREE.MathUtils.degToRad(k === 0 ? trng.range(5, 15) : trng.range(25, 45)));
+        if (tip.y < 1.5 && fd.y < 0.1) { fd.y = 0.15; fd.normalize(); }
+        queue.push({
+          id: hash32(b.id, 5000 + k), level: lvl + 1, birth: b.birth + 2,
+          origin: tip.clone(), dir: fd.normalize(),
+          maxLen: Math.max(0.6, b.maxLen * p.lengthRatio * (k === 0 ? 0.9 : 0.7) * trng.range(0.8, 1.1) * (stunt < 0.95 ? 0.6 : 1)),
+          radius: Math.max(0.006, rTip * (k === 0 ? 0.8 : 0.6)),
+          parent: index, joint: pts.length - 1 + jointOffset,
+          parentDir: tdir.clone(), parentRadius: rTip,
+          continuation: k === 0,
         });
         childCount++;
       }
