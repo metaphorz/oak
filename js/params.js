@@ -118,7 +118,7 @@ export const SCHEMA = [
       { key: 'barkDarkness', label: 'Bark darkness', min: 0, max: 1, step: 0.01, value: 0.35 },
       { key: 'barkScars', label: 'Scars & splits', min: 0, max: 1, step: 0.01, value: 0.35, help: 'Narrow splits where bark has cracked or lifted, showing darker weathered wood, plus gentle tone variation and damp streaks.' },
       { key: 'lichen', label: 'Lichens', min: 0, max: 1, step: 0.01, value: 0.5, help: 'Pale grey-green crustose lichen blotches, and here and there Christmas lichen (Cryptothecia rubrocincta, a Florida species) with its muted red rim.' },
-      { key: 'limbMoss', label: 'Limb moss & fern', min: 0, max: 1, step: 0.01, value: 0.35, help: 'Green moss and resurrection fern on the upper faces of limbs.' },
+      { key: 'limbMoss', label: 'Limb moss & fern', min: 0, max: 1, step: 0.01, value: 0.15, help: 'Green moss and resurrection fern on the upper faces of limbs.' },
     ],
   },
   {
@@ -156,12 +156,12 @@ export const PRESETS = {
   'Grand live oak, sheltered': {
     windStrength: 0.15, saltExposure: 0.05, windLean: 0.2, flagging: 0.1, saltBurn: 0.05,
     limbLength: 17, limbCount: 9, trunkRadius: 1.0, age: 220, mossDensity: 0.8, mossLength: 1.6, limbSag: 0.65,
-    ground: 'hammock', showOcean: false, showSpray: false, limbMoss: 0.45, buttress: 0.3,
+    ground: 'hammock', showOcean: false, showSpray: false, limbMoss: 0.3, buttress: 0.3,
     fullness: 0.9, interiorShade: 0.55,
   },
   'Maritime forest edge': {
     windStrength: 0.45, saltExposure: 0.4, shearAngle: 14, windLean: 0.4, flagging: 0.35,
-    ground: 'edge', mossDensity: 0.6, limbMoss: 0.45,
+    ground: 'edge', mossDensity: 0.6, limbMoss: 0.3,
   },
   'Bluff wind-flagged (extreme)': {
     ground: 'dune',

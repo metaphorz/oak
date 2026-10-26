@@ -73,9 +73,9 @@ export function createBarkMaterial(p) {
     Object.assign(shader.uniforms, u);
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', '#include <common>\nvarying vec3 vWorldN;')
-      .replace('#include <common>', '#include <common>\nvarying vec3 vBarkW;')
+      .replace('#include <common>', '#include <common>\nvarying vec3 vBarkW;\nattribute float aMossOk;\nvarying float vMossOk;')
       .replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\nvWorldN = normalize(mat3(modelMatrix) * objectNormal);')
-      .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvBarkW = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+      .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvBarkW = (modelMatrix * vec4(transformed, 1.0)).xyz;\nvMossOk = aMossOk;');
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>
         varying vec3 vWorldN;
@@ -85,6 +85,7 @@ export function createBarkMaterial(p) {
         uniform float uLichen;
         uniform sampler2D uDisp;
         varying vec3 vBarkW;
+        varying float vMossOk;
         float bHash(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
         float bNoise(vec3 p) {
           vec3 i = floor(p), f = fract(p);
@@ -129,8 +130,10 @@ export function createBarkMaterial(p) {
         diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.55, 0.33, 0.3), cRim * 0.35);
         // Moss and resurrection fern settle on upward faces and in bark furrows.
         float up = vWorldN.y + (0.5 - disp) * 0.7;
-        float mossAmt = smoothstep(0.8 - uLimbMoss * 1.0, 1.1 - uLimbMoss * 0.7, up) * min(1.0, uLimbMoss * 1.15);
-        vec3 mossCol = mix(vec3(0.16, 0.22, 0.07), vec3(0.32, 0.38, 0.13), disp);
+        // Patchy, never a continuous coat; none on roots.
+        float mossPatch = smoothstep(0.42, 0.62, bFbm(vBarkW * 1.7 + 19.0));
+        float mossAmt = smoothstep(0.8 - uLimbMoss * 1.0, 1.1 - uLimbMoss * 0.7, up) * min(1.0, uLimbMoss * 1.15) * mossPatch * vMossOk;
+        vec3 mossCol = mix(diffuseColor.rgb, mix(vec3(0.2, 0.24, 0.12), vec3(0.3, 0.33, 0.17), disp), 0.65);
         diffuseColor.rgb = mix(diffuseColor.rgb, mossCol, mossAmt);`)
       .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
         roughnessFactor = mix(roughnessFactor, 0.95, mossAmt);

@@ -49,6 +49,7 @@ export function buildBarkGeometry(sk, quality = 'high') {
   const pos = [];
   const nor = [];
   const uv = [];
+  const mossOk = [];
   const idx = [];
   const T = new THREE.Vector3();
   const N = new THREE.Vector3();
@@ -57,7 +58,7 @@ export function buildBarkGeometry(sk, quality = 'high') {
 
   const all = [...sk.branches, ...sk.roots];
   for (const br of all) {
-    const smoothF = br.root ? 2 : br.level <= 1 ? 2 : 1;
+    const smoothF = br.root ? 2 : br.level <= 2 ? 3 : br.level === 3 ? 2 : 1;
     const { points, radii } = catmull(br.points, br.radii, quality === 'draft' ? 1 : smoothF);
     if (points.length < 2) continue;
     const seg = br.root ? Math.max(6, radial[1]) : radial[Math.min(br.level, radial.length - 1)];
@@ -95,6 +96,7 @@ export function buildBarkGeometry(sk, quality = 'high') {
         pos.push(c.x + tmp.x * rr, c.y + tmp.y * rr, c.z + tmp.z * rr);
         nor.push(tmp.x, tmp.y, tmp.z);
         uv.push((j / seg) * uRepeat, vAcc / texScale);
+        mossOk.push(br.root ? 0 : 1); // moss grows on limbs, never on roots
       }
     }
     const rows = points.length;
@@ -114,6 +116,7 @@ export function buildBarkGeometry(sk, quality = 'high') {
     pos.push(last.x + T.x * rEnd * 0.9, last.y + T.y * rEnd * 0.9, last.z + T.z * rEnd * 0.9);
     nor.push(T.x, T.y, T.z);
     uv.push(uRepeat * 0.5, (vAcc + rEnd) / texScale);
+    mossOk.push(br.root ? 0 : 1);
     const ring = base + (rows - 1) * (seg + 1);
     for (let j = 0; j < seg; j++) idx.push(ring + j, ring + j + 1, tip);
   }
@@ -122,6 +125,7 @@ export function buildBarkGeometry(sk, quality = 'high') {
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
   g.setAttribute('normal', new THREE.Float32BufferAttribute(nor, 3));
   g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+  g.setAttribute('aMossOk', new THREE.Float32BufferAttribute(mossOk, 1));
   g.setIndex(idx);
   // Flare changed the trunk surface, so recompute normals for correct shading.
   g.computeVertexNormals();

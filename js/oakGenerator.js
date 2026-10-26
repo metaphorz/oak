@@ -277,8 +277,7 @@ export function generateOak(p, opts = {}) {
         bendToward(cd, b.dir, 1.2 / m);
         pos.addScaledVector(cd, Lc / m);
       }
-      dir.copy(cd);
-      bendToward(dir, b.dir, 1);
+      dir.copy(cd); // carry on smoothly; tropisms and the turn limit do the rest
     } else if (b.parentDir && lvl >= 1 && lvl <= 3) {
       const pr0 = b.parentRadius;
       const r0 = b.radius;
@@ -289,14 +288,14 @@ export function generateOak(p, opts = {}) {
         const sDist = (k / m) * Lc;
         const outside = Math.max(0, sDist - pr0 * 0.8);
         const swell = 1 + 0.75 * Math.exp(-outside / (1.2 * r0));
+        if (!(pond && pond.contains(pos.x, pos.z))) pos.y = Math.max(pos.y, r0 + 0.04);
         collar.pts.push(pos.clone());
         collar.radii.push(Math.min(pr0 * 0.97, r0 * swell));
         collar.dirs.push(cd.clone());
         bendToward(cd, b.dir, 1.4 / m);
         pos.addScaledVector(cd, Lc / m);
       }
-      dir.copy(cd);
-      bendToward(dir, b.dir, 1);
+      dir.copy(cd); // carry on smoothly; tropisms and the turn limit do the rest
     }
     const pts = [pos.clone()];
     const radii = [b.radius];
@@ -311,6 +310,7 @@ export function generateOak(p, opts = {}) {
     const towardPond = pond && hl > 1e-3 ? Math.max(0, (hd.x * pond.dir.x + hd.z * pond.dir.z) / hl) : 0;
     const groundClear = (p.limbClearance ?? 1) * rng.range(0.6, 1.4) * (1 - towardPond);
     let stunt = 1;
+    const prevDir = dir.clone();
     const wavePhase = rng() * Math.PI * 2;
     const waveFreq = rng.range(5, 9);
     const gnarl = lvl === 0 ? 0.05 + 0.12 * p.trunkGnarl : (0.05 + 0.16 * p.sinuosity) * (lvl === 1 ? 1 : 1.25);
@@ -332,9 +332,10 @@ export function generateOak(p, opts = {}) {
 
       // Crooked, zig-zag growth: oaks grow sympodially, so the axis kinks
       // where a terminal bud died and a lateral took over.
-      if (lvl >= 1 && rng() < 0.12 + 0.3 * p.sinuosity) {
+      // Gentle and on thinner wood only; big limbs stay smoothly sinuous.
+      if (lvl >= 2 && rng() < 0.1 + 0.2 * p.sinuosity) {
         const k = anyPerpendicular(dir).applyAxisAngle(dir, rng() * Math.PI * 2);
-        dir.applyAxisAngle(k, THREE.MathUtils.degToRad(rng.range(10, 18 + 22 * p.sinuosity))).normalize();
+        omega.addScaledVector(k, THREE.MathUtils.degToRad(rng.range(4, 8 + 8 * p.sinuosity)));
       }
       // Big limbs undulate up and down like waves along their length.
       if (lvl >= 1 && lvl <= 2) {
@@ -388,6 +389,26 @@ export function generateOak(p, opts = {}) {
         bendToward(dir, leeTarget, k);
       }
 
+      // Wood grows in smooth curves: limit how far the axis can turn in one
+      // section so no combination of tropisms makes a sharp elbow.
+      // Look ahead: start curving up before reaching the ground (or water).
+      if (lvl >= 1) {
+        const aheadY = pos.y + dir.y * segLen * 2;
+        const wet = pond && pond.contains(pos.x, pos.z);
+        const floorY = wet ? -0.35 : r + 0.04 + groundClear;
+        if (aheadY < floorY && dir.y < 0.15) {
+          const rise = new THREE.Vector3(dir.x, 0.3, dir.z).normalize();
+          bendToward(dir, rise, 0.2);
+        }
+      }
+      const maxTurn = [0.12, 0.22, 0.3, 0.45, 0.6, 0.6][Math.min(lvl, 5)];
+      const turned = dir.angleTo(prevDir);
+      if (turned > maxTurn) {
+        const back = prevDir.clone();
+        bendToward(back, dir, maxTurn);
+        dir.copy(back);
+      }
+      prevDir.copy(dir);
       pos.addScaledVector(dir, segLen);
 
       // Ground clearance: most low limbs hang a metre or two up; only very
@@ -398,8 +419,9 @@ export function generateOak(p, opts = {}) {
       if (lvl >= 1 && pos.y < clear) {
         pos.y = clear;
         if (dir.y < 0.12) {
-          dir.y = 0.12 + rng() * 0.15;
-          dir.normalize();
+          // Rest along the ground, then curve gently back up.
+          const rise = new THREE.Vector3(dir.x, 0.35 + rng() * 0.2, dir.z).normalize();
+          bendToward(dir, rise, 0.18);
           omega.multiplyScalar(0.3);
         }
       }
@@ -415,17 +437,14 @@ export function generateOak(p, opts = {}) {
           // Growth checked by salt means less leaf area and so less wood:
           // the limb thins quickly instead of staying trunk-sized.
           stunt *= 0.82;
-          pos.addScaledVector(dir, -segLen);
-          // Flatten out along the surface, keeping the limb's own heading
-          // with only a slight leeward drift.
+          // Steer (never clamp) the limb to run along under the surface,
+          // keeping its own heading with a slight leeward drift; the turn
+          // limiter keeps the curve smooth.
           const flat = new THREE.Vector3(dir.x, 0, dir.z);
           if (flat.lengthSq() < 1e-4) flat.copy(wind.lee);
           flat.normalize().addScaledVector(wind.lee, 0.35);
-          flat.y = -0.12 - 0.3 * smooth(-0.3, 1, over);
-          bendToward(dir, flat.normalize(), 0.25 + 0.35 * shear.severity);
-          pos.addScaledVector(dir, segLen);
-          pos.y = Math.min(pos.y, shear.height(pos.x, pos.z) - 0.25);
-          pos.y = Math.max(pos.y, r + 0.04 + groundClear);
+          flat.y = -0.1 - 0.25 * smooth(-0.3, 1, over);
+          bendToward(dir, flat.normalize(), 0.12 + 0.18 * shear.severity);
         } else if (over > 0) {
           const pDie = smooth(0, 0.8, over) * (0.4 + 0.6 * shear.severity);
           if (rng() < pDie + 0.15) {
@@ -454,6 +473,8 @@ export function generateOak(p, opts = {}) {
       points: [...collar.pts, ...pts], radii: [...collar.radii, ...radii], dirs: [...collar.dirs, ...dirs],
     });
     const jointOffset = collar.pts.length;
+    // Only now that the leader exists does its parent need no end cap.
+    if (b.continuation && branches[b.parent]) branches[b.parent].continued = true;
 
     if (pruned && !b.hedge) {
       const tip = pts[pts.length - 1];
@@ -529,6 +550,11 @@ export function generateOak(p, opts = {}) {
           angle = p.childAngle + crng.sym(12);
         }
         const cdir = pdir.clone().applyAxisAngle(side, THREE.MathUtils.degToRad(angle)).normalize();
+        // Shoots on a limb lying low never grow down into the soil.
+        if (lvl >= 1 && origin.y < pr * 2 + 0.6 && cdir.y < 0.1) {
+          cdir.y = Math.abs(cdir.y) * 0.5 + 0.1;
+          cdir.normalize();
+        }
         // Open water is a light gap (open sky plus reflected light): main limbs swing toward it.
         if (lvl === 0 && pond && !fork) {
           const h = new THREE.Vector3(cdir.x, 0, cdir.z);
@@ -562,10 +588,7 @@ export function generateOak(p, opts = {}) {
         // The continuing leader starts exactly where the trunk ends, at its
         // width, so the trunk flows into it.
         const continuation = fork && c === count - 2;
-        if (continuation) {
-          radius = Math.max(radius, radii[radii.length - 1] * 0.9);
-          branches[index].continued = true;
-        }
+        if (continuation) radius = Math.max(radius, radii[radii.length - 1] * 0.9);
         queue.push({
           id: hash32(b.id, c + 1), level: lvl + 1, birth, dir: cdir, maxLen, radius,
           origin: continuation ? pts[pts.length - 1].clone() : origin,
