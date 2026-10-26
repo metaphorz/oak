@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Oak Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three/build/three.module.js",
+        "three/addons/": "./vendor/three/addons/"
+      }
+    }
+  </script>
+</head>
+<body data-engine="three">
+  <header class="topbar">
+    <div class="brand">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 29c0-6 0-9-3-12M16 29c0-5 1-8 5-11M6 15c3-6 9-8 14-6 4-2 8 1 7 5 3 2 1 6-3 6H9c-4 0-6-3-3-5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <div>
+        <h1>Live Oak Explorer</h1>
+        <p>Salt-pruned live oak · Amelia Island, Florida</p>
+      </div>
+    </div>
+    <nav class="engines" role="tablist" aria-label="Rendering engine">
+      <button role="tab" data-engine="three" aria-selected="true">Three.js <small>real-time</small></button>
+      <button role="tab" data-engine="offline" aria-selected="false">Blender + Unreal <small>photoreal</small></button>
+    </nav>
+    <div class="top-actions">
+      <button id="btn-gallery" class="ghost">Reference photos</button>
+      <button id="btn-about" class="ghost">Science &amp; sources</button>
+    </div>
+  </header>
+
+  <aside class="panel">
+    <div class="panel-tools">
+      <select id="presets" aria-label="Presets"></select>
+      <button id="btn-reseed" title="New random seed">🎲 Reseed</button>
+      <button id="btn-reset" class="ghost" title="Reset all sliders">Reset</button>
+    </div>
+    <button id="btn-grow" class="primary wide">▶ Grow time-lapse</button>
+    <div id="params"></div>
+    <details class="group">
+      <summary>Reference &amp; export</summary>
+      <div class="row row-bool">
+        <input type="checkbox" id="ref-meshy"><label for="ref-meshy">Show Meshy model alongside <small id="ref-meshy-status"></small></label>
+      </div>
+      <div class="btn-grid">
+        <button id="btn-export-glb">Download GLB</button>
+        <button id="btn-export-json">Skeleton JSON</button>
+        <button id="btn-save-params">Save sliders</button>
+        <button id="btn-load-params">Load sliders</button>
+      </div>
+      <input type="file" id="file-params" accept="application/json" hidden>
+    </details>
+  </aside>
+
+  <main class="stage">
+    <canvas id="viewport"></canvas>
+    <div class="hud">
+      <div id="hud-age" class="hud-big"></div>
+      <div id="hud-wind"></div>
+      <div id="hud-spray" class="hud-legend">· faint specks trace the salt aerosol path (invisible in reality)</div>
+    </div>
+    <div id="fps" class="fps"></div>
+    <div id="stats" class="stats"></div>
+    <figure id="pinned" class="pinned" hidden>
+      <img id="pinned-img" alt="Pinned reference photo">
+      <figcaption><span id="pinned-cap"></span><button id="btn-unpin" aria-label="Unpin">✕</button></figcaption>
+    </figure>
+    <div id="blender-model-bar" class="model-bar" hidden>
+      Showing the Blender-built model · <button id="btn-show-procedural">Back to live procedural tree</button>
+    </div>
+
+    <section class="engine-panel" aria-label="Blender and Unreal">
+      <h2>Photoreal engines</h2>
+      <p class="muted">The live tree's skeleton is sent to Blender, which rebuilds it with 4K photoscanned bark, real hair-strand Spanish moss and Cycles path tracing. Unreal Engine 5 then imports Blender's model into a Lumen-lit level with foliage wind.</p>
+      <div class="engine-status">
+        <span id="st-blender" class="pill">Blender …</span>
+        <span id="st-unreal" class="pill">Unreal …</span>
+      </div>
+      <div id="engine-offline" class="note" hidden>
+        Start the local server to enable these engines:<br><code>node server.js</code> then open <code>http://localhost:8420</code>
+      </div>
+      <h3>Blender</h3>
+      <div class="engine-grid">
+        <label>Engine <select id="bl-engine"><option value="CYCLES">Cycles (path traced)</option><option value="EEVEE">EEVEE (fast)</option></select></label>
+        <label>Samples <select id="bl-samples"><option>32</option><option selected>128</option><option>512</option></select></label>
+        <label>Device <select id="bl-device"><option value="CPU" selected>CPU (reliable)</option><option value="GPU">GPU · Metal (experimental)</option></select></label>
+        <label>Resolution <select id="bl-res"><option>1280x720</option><option selected>1920x1080</option><option>3840x2160</option></select></label>
+      </div>
+      <div class="btn-grid">
+        <button id="btn-blender-render" class="primary needs-server" disabled>Render still</button>
+        <button id="btn-blender-open" class="needs-server" disabled>Open in Blender</button>
+      </div>
+      <h3>Unreal Engine 5</h3>
+      <button id="btn-unreal" class="primary wide needs-server" disabled>Send tree to Unreal</button>
+      <p class="muted small">Exports from Blender, imports into the <code>unreal/OakExplorer</code> project, builds a sky, sun, sand and wind level, and saves a screenshot. The first launch compiles shaders and is slow.</p>
+      <p id="engine-stale" class="note small" hidden>Sliders changed since the last engine build. Render again to update.</p>
+      <div id="engine-progress" class="progress" hidden><span class="spinner"></span><span id="engine-progress-label">Working…</span></div>
+      <pre id="engine-log" class="log"></pre>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <dialog id="gallery" class="modal wide-modal">
+    <header><h2>Live oak references</h2><form method="dialog"><button aria-label="Close">✕</button></form></header>
+    <div id="gallery-tabs" class="gallery-tabs"></div>
+    <div id="gallery-grid" class="gallery-grid"></div>
+    <p class="gallery-note">Field photos by the author; references are openly licensed Wikimedia Commons images (credits in <code>photos/web/CREDITS.md</code>). Open one and pin it beside the viewer to compare while adjusting sliders.</p>
+  </dialog>
+  <dialog id="lightbox" class="modal lightbox">
+    <form method="dialog"><button aria-label="Close" class="close-float">✕</button></form>
+    <img id="lightbox-img" alt=""><div class="lightbox-bar"><p id="lightbox-cap"></p><button id="btn-pin" class="primary">Pin beside viewer</button></div>
+  </dialog>
+  <dialog id="result" class="modal wide-modal">
+    <header><h2 id="result-title">Render</h2><form method="dialog"><button aria-label="Close">✕</button></form></header>
+    <img id="result-img" class="result-img" alt="Offline render of the oak">
+    <footer><span id="result-links"></span><button id="btn-load-blender-glb" class="primary" hidden>Load Blender model in viewer</button></footer>
+  </dialog>
+
+  <dialog id="about" class="modal wide-modal">
+    <header><h2>How the model works</h2><form method="dialog"><button aria-label="Close">✕</button></form></header>
+    <div class="prose">
+      <h3>Salt pruning</h3>
+      <p>On barrier islands, onshore wind carries salt aerosol off the surf. Salt that lands on the windward shoots kills buds and young leaves, while the leeward side keeps growing. Over decades the crown becomes a smooth, hedge-like ramp that rises away from the sea, and branches curve leeward. Salt-pruned trees also stay smaller than sheltered ones.</p>
+      <p>The model uses an inclined <em>shear surface</em> whose height rises leeward at the <b>crown shear angle</b>. Each growing shoot that crosses it is likely to die back. Dieback triggers a dense tuft of short shoots just below the surface, which forms the clipped crown edge. It also leaves dead grey stubs and salt-burned leaves on the exposed face.</p>
+      <h3>Wind over time</h3>
+      <p>Every branch has a birth year and its own growth curve, so the <b>Age</b> slider and the time-lapse replay the tree's life. The following effects build up with age:</p>
+      <ul>
+        <li>The trunk and limbs lean leeward.</li>
+        <li>Branches growing into the wind are stunted (flagging).</li>
+        <li>The root plate is reinforced along the wind axis: tension roots windward and compression roots leeward.</li>
+      </ul>
+      <p>The trunk base shows that buttressing as an elliptical, fluted flare. Turn on <b>X-ray root plate</b> to see it below the sand.</p>
+      <h3>Low centre of gravity</h3>
+      <p>Live oaks branch close to the ground. Their massive, nearly horizontal limbs can sag until an elbow rests on the soil, then turn upward again. This keeps the centre of mass low against hurricane loads. You can tune it with <b>First limb height</b>, <b>Limb angle</b> and <b>Limb sag</b>.</p>
+      <h3>Growing toward the light</h3>
+      <p>A tree grows toward its whole <em>light field</em>, not just upward. The <b>Light seeking</b> slider combines three sources:</p>
+      <ul>
+        <li>diffuse skylight from the open dome above;</li>
+        <li>the sun's path, which at Amelia Island (about 30.6°N) crosses the southern sky, so crowns grow fuller and reach further on the south side;</li>
+        <li>over open water, the extra sky from the canopy gap plus light reflected off the surface (strongest at low sun angles), which lights low limbs from the side and below.</li>
+      </ul>
+      <p>Shoots bend toward the brighter direction (phototropism), and leaves survive longer where light is stronger. Over decades the crown flows toward the light. Limbs that reach the water aren't "drinking": they are reaching for the light, then bowing under their own weight. The roots are what actually grow toward the water.</p>
+      <h3>Spanish moss</h3>
+      <p><i>Tillandsia usneoides</i> is an epiphytic bromeliad, not a moss and not a parasite. It hangs from near-horizontal, humid, sheltered limbs, so the model places fewer clumps on the salt-blasted windward face.</p>
+      <h3>Renderers</h3>
+      <p><b>Three.js</b> grows and meshes the tree in real time. The same <em>skeleton</em> (branch polylines, radii, leaves and moss strands) is sent to <b>Blender</b>, which rebuilds it with 4K photoscanned bark, real hair-curve moss and Cycles path tracing. <b>Unreal Engine 5</b> imports Blender's export into a Lumen-lit level with foliage wind.</p>
+      <h3>Sources &amp; credits</h3>
+      <ul class="sources">
+        <li>NPS, <a href="https://www.nps.gov/articles/live-oak.htm" target="_blank" rel="noopener">Live oak</a>: salt-pruned barrier-island oaks with hedge-like windward edges and branches curving away from shore.</li>
+        <li>USGS NVCS, <a href="https://www1.usgs.gov/csas/nvcs/unitDetails/685126" target="_blank" rel="noopener">coastal live oak forest description</a>: dwarfed, sculpted form under wind and salt spray.</li>
+        <li>UF/IFAS EDIS, <a href="https://edis.ifas.ufl.edu/pdf/ST/ST56400.pdf" target="_blank" rel="noopener">Quercus virginiana fact sheet (ST564)</a>: high aerosol salt tolerance, spreading crown.</li>
+        <li>Tree architecture after <a href="https://github.com/dgreenheck/ez-tree" target="_blank" rel="noopener">ez-tree</a> by Daniel Greenheck (MIT): skeleton/mesh split, force tropism, leaf sway shader.</li>
+        <li><a href="https://drajmarsh.bitbucket.io/tree3d.html" target="_blank" rel="noopener">PD: Tree Generator</a> (proctree-based, radial and forking branches, solar shading), reviewed for ideas.</li>
+        <li>Textures (CC0): bark from <a href="https://polyhaven.com/a/jolcham_oak_bark_01" target="_blank" rel="noopener">Poly Haven</a>; leaves from <a href="https://ambientcg.com/view?id=LeafSet022" target="_blank" rel="noopener">ambientCG LeafSet022</a>; sand and forest litter from Poly Haven; sky HDRI <i>Kloofendal 48d Partly Cloudy</i> by Greg Zaal (Poly Haven).</li>
+        <li>Reference model: Meshy AI "Whispering Oak", decimated from 7.4M to 250k triangles for the viewer.</li>
+      </ul>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

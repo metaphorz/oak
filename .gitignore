@@ -1,0 +1,21 @@
+# macOS / editors
+.DS_Store
+.vscode/
+
+# Generated renders, exports and Unreal/Blender jobs (several GB)
+output/
+
+# Unreal build products
+unreal/OakExplorer/Saved/
+unreal/OakExplorer/Intermediate/
+unreal/OakExplorer/DerivedDataCache/
+unreal/OakExplorer/Binaries/
+
+# Blender-only assets (the web app uses the 2K maps)
+assets/textures/**/*_4k.jpg
+assets/hdri/*_4k.hdr
+
+# Original Meshy model: 178 MB, over GitHub's 100 MB limit (web version is meshy_oak_web.glb)
+meshy/Meshy_AI_Whispering_Oak_*.glb
+
+node_modules/

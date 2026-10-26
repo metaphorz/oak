@@ -1,0 +1,6 @@
+{
+  "_doc": "Ground types shared by three.js (js/materials.js), Blender (blender/build_oak.py) and Unreal (unreal/scripts/setup_oak_scene.py). Colour = mix(rgb, luminance * [1.08, 0.98, 0.84], desat) * tintA for set A (desat * 0.7 for B); B is blended in by noise; litter collects under the canopy.",
+  "hammock": { "a": "leaves_forest_ground", "b": "forrest_sand_01", "tintA": [0.8, 0.74, 0.64], "bAmount": 0.22, "desat": 0.8, "litterUnderCanopy": 0 },
+  "edge": { "a": "forest_leaves_02", "b": "leaves_forest_ground", "tintA": [0.9, 0.9, 0.85], "bAmount": 0.35, "desat": 0.8, "litterUnderCanopy": 0 },
+  "dune": { "a": "coast_sand_01", "b": "forest_leaves_02", "tintA": [1, 1, 1], "bAmount": 0.15, "desat": 0.5, "litterUnderCanopy": 1 }
+}
