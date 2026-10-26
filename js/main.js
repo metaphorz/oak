@@ -4,17 +4,17 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 
-import { defaultParams } from './params.js?v=20261026172345';
-import { generateOak, skeletonToJSON, windVectors } from './oakGenerator.js?v=20261026172345';
-import { buildBarkGeometry, buildLeafMesh, buildMossGeometry, SPRIG, LEAF_RECTS, LEAF_ASPECT } from './oakMesher.js?v=20261026172345';
+import { defaultParams } from './params.js?v=20261026172943';
+import { generateOak, skeletonToJSON, windVectors } from './oakGenerator.js?v=20261026172943';
+import { buildBarkGeometry, buildLeafMesh, buildMossGeometry, SPRIG, LEAF_RECTS, LEAF_ASPECT } from './oakMesher.js?v=20261026172943';
 import {
   shared, createBarkMaterial, updateBarkMaterial, createLeafMaterials, updateLeafMaterial,
   createMossTexture, createMossMaterials, setMossTone, createUnderstoryMaterial,
-} from './materials.js?v=20261026172345';
-import { createRenderer, createEnvironment, updateEnvironment, animateSpray, sunDirection, ATMOSPHERES } from './scene.js?v=20261026172345';
-import { buildPanel, buildPresetSelect, compassName } from './ui.js?v=20261026172345';
-import * as backend from './backend.js?v=20261026172345';
-import { generateUnderstory, understoryToJSON } from './understory.js?v=20261026172345';
+} from './materials.js?v=20261026172943';
+import { createRenderer, createEnvironment, updateEnvironment, animateSpray, sunDirection, ATMOSPHERES } from './scene.js?v=20261026172943';
+import { buildPanel, buildPresetSelect, compassName } from './ui.js?v=20261026172943';
+import * as backend from './backend.js?v=20261026172943';
+import { generateUnderstory, understoryToJSON } from './understory.js?v=20261026172943';
 
 // ------------------------------------------------------------------ state ---
 
@@ -331,8 +331,8 @@ function renderGallery(cat) {
 // photos/manifest.local.json lists copyrighted reference photos kept only on
 // this machine (git-ignored); on GitHub Pages it is simply absent.
 Promise.all([
-  fetch('photos/manifest.json?v=20261026172345').then((r) => r.json()),
-  fetch('photos/manifest.local.json?v=20261026172345').then((r) => (r.ok ? r.json() : [])).catch(() => []),
+  fetch('photos/manifest.json?v=20261026172943').then((r) => r.json()),
+  fetch('photos/manifest.local.json?v=20261026172943').then((r) => (r.ok ? r.json() : [])).catch(() => []),
 ]).then(([list, local]) => {
   photos = [...list, ...local];
   list = photos;
@@ -512,6 +512,7 @@ $('btn-blender-render').addEventListener('click', async () => {
     $('engine-progress').hidden = true;
     if (st.state !== 'done') throw new Error('Blender job failed — see log');
     showResult(st);
+    await saveToDownloads(st.outputs.render, 'cycles');
   } catch (err) {
     $('engine-progress').hidden = true;
     alertBar(err.message);
@@ -552,6 +553,8 @@ $('btn-unreal').addEventListener('click', async () => {
           if (!lastShot) showResult({ outputs: { render: us.screenshot } }, 'Unreal Engine 5 (Lumen)');
           else $('result-img').src = us.screenshot;
           lastShot = us.screenshot;
+          // The last screenshot is taken once shaders have compiled; save that one.
+          if (/screenshot 5\/5/.test(us.log || '')) saveToDownloads(us.screenshot, 'unreal');
         }
       } else if (us.state === 'failed' || us.state === 'exited') {
         // The editor ended without producing a screenshot: never leave "Working…" up.
@@ -564,6 +567,20 @@ $('btn-unreal').addEventListener('click', async () => {
     alertBar(err.message);
   }
 });
+
+// Save a finished render into the browser's Downloads folder (Chrome shows its
+// "download complete" notice), named after the tree and time.
+async function saveToDownloads(url, engine) {
+  if (!url) return;
+  try {
+    const blob = await (await fetch(url)).blob();
+    const d = new Date();
+    const stamp = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}-${String(d.getHours()).padStart(2, '0')}${String(d.getMinutes()).padStart(2, '0')}`;
+    download(blob, `live-oak-${engine}-seed${params.seed}-${Math.round(params.age)}yr-${stamp}.png`);
+  } catch (err) {
+    alertBar(`Render saved in the project (output/jobs) but could not be downloaded: ${err.message}`);
+  }
+}
 
 function showResult(st, title = 'Blender Cycles render') {
   const o = st.outputs || {};

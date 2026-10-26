@@ -1,7 +1,7 @@
 // Builds the parameter panel from SCHEMA. Calls onChange(key, value, final)
 // while dragging (final=false) and on release (final=true).
 
-import { SCHEMA, PRESETS, defaultParams } from './params.js?v=20261026172345';
+import { SCHEMA, PRESETS, defaultParams } from './params.js?v=20261026172943';
 
 const COMPASS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
 export const compassName = (deg) => COMPASS[Math.round(((deg % 360) + 360) % 360 / 45) % 8];

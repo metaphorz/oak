@@ -5,8 +5,8 @@
 // Shader patches add limb moss, salt burn, translucency and wind sway.
 
 import * as THREE from 'three';
-import { LEAF_RECTS } from './oakMesher.js?v=20261026172345';
-import GROUND_SETS from '../assets/grounds.json?v=20261026172345' with { type: 'json' };
+import { LEAF_RECTS } from './oakMesher.js?v=20261026172943';
+import GROUND_SETS from '../assets/grounds.json?v=20261026172943' with { type: 'json' };
 
 const loader = new THREE.TextureLoader();
 const cache = new Map();
