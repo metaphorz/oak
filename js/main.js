@@ -4,17 +4,17 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 
-import { defaultParams } from './params.js?v=20261026172111';
-import { generateOak, skeletonToJSON, windVectors } from './oakGenerator.js?v=20261026172111';
-import { buildBarkGeometry, buildLeafMesh, buildMossGeometry, SPRIG, LEAF_RECTS, LEAF_ASPECT } from './oakMesher.js?v=20261026172111';
+import { defaultParams } from './params.js?v=20261026172345';
+import { generateOak, skeletonToJSON, windVectors } from './oakGenerator.js?v=20261026172345';
+import { buildBarkGeometry, buildLeafMesh, buildMossGeometry, SPRIG, LEAF_RECTS, LEAF_ASPECT } from './oakMesher.js?v=20261026172345';
 import {
   shared, createBarkMaterial, updateBarkMaterial, createLeafMaterials, updateLeafMaterial,
   createMossTexture, createMossMaterials, setMossTone, createUnderstoryMaterial,
-} from './materials.js?v=20261026172111';
-import { createRenderer, createEnvironment, updateEnvironment, animateSpray, sunDirection, ATMOSPHERES } from './scene.js?v=20261026172111';
-import { buildPanel, buildPresetSelect, compassName } from './ui.js?v=20261026172111';
-import * as backend from './backend.js?v=20261026172111';
-import { generateUnderstory, understoryToJSON } from './understory.js?v=20261026172111';
+} from './materials.js?v=20261026172345';
+import { createRenderer, createEnvironment, updateEnvironment, animateSpray, sunDirection, ATMOSPHERES } from './scene.js?v=20261026172345';
+import { buildPanel, buildPresetSelect, compassName } from './ui.js?v=20261026172345';
+import * as backend from './backend.js?v=20261026172345';
+import { generateUnderstory, understoryToJSON } from './understory.js?v=20261026172345';
 
 // ------------------------------------------------------------------ state ---
 
@@ -331,8 +331,8 @@ function renderGallery(cat) {
 // photos/manifest.local.json lists copyrighted reference photos kept only on
 // this machine (git-ignored); on GitHub Pages it is simply absent.
 Promise.all([
-  fetch('photos/manifest.json?v=20261026172111').then((r) => r.json()),
-  fetch('photos/manifest.local.json?v=20261026172111').then((r) => (r.ok ? r.json() : [])).catch(() => []),
+  fetch('photos/manifest.json?v=20261026172345').then((r) => r.json()),
+  fetch('photos/manifest.local.json?v=20261026172345').then((r) => (r.ok ? r.json() : [])).catch(() => []),
 ]).then(([list, local]) => {
   photos = [...list, ...local];
   list = photos;
@@ -479,6 +479,14 @@ function elapsed(t0) {
   return s < 60 ? `${s}s` : `${Math.floor(s / 60)}m ${s % 60}s`;
 }
 
+// Blender/Unreal need the local server (./start); never start a job without it.
+function requireLocal() {
+  if (backend.state.online) return true;
+  $('engine-progress').hidden = true;
+  alertBar('Blender and Unreal run on your computer: run ./start and use the local app.');
+  return false;
+}
+
 async function runBlender(mode) {
   const samples = +$('bl-samples').value;
   const res = $('bl-res').value;
@@ -498,6 +506,7 @@ async function runBlender(mode) {
 }
 
 $('btn-blender-render').addEventListener('click', async () => {
+  if (!requireLocal()) return;
   try {
     const st = await runBlender('render');
     $('engine-progress').hidden = true;
@@ -510,6 +519,7 @@ $('btn-blender-render').addEventListener('click', async () => {
 });
 
 $('btn-blender-open').addEventListener('click', async () => {
+  if (!requireLocal()) return;
   try {
     const payload = await buildPayload({ mode: 'gui', render: { samples: 64, resolution: '1920x1080', engine: $('bl-engine').value } });
     await backend.blenderOpen(payload);
@@ -520,6 +530,7 @@ $('btn-blender-open').addEventListener('click', async () => {
 });
 
 $('btn-unreal').addEventListener('click', async () => {
+  if (!requireLocal()) return;
   try {
     const st = await runBlender('export');
     if (st.state !== 'done') {
