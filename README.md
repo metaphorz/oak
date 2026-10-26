@@ -1,5 +1,7 @@
 # Live Oak Explorer
 
+*Crafted by Paul Fishwick & Claude Code*
+
 An interactive explorer for a single **coastal live oak** (*Quercus virginiana*) as it grows on
 Amelia Island, Florida. It models **salt pruning** driven by a user-set wind vector, wind
 training over the tree's lifetime, wind-axis root buttressing, low branching, Spanish moss and the
@@ -169,3 +171,7 @@ compares the same scenes across the three renderers.
   `oak.blend` and Unreal screenshots.
 - The Unreal project is `unreal/OakExplorer/`. Its `Content/Python/init_unreal.py` builds the scene
   only when the server launches the editor.
+
+## License
+
+MIT, see [LICENSE](LICENSE). Third-party textures, photos and three.js keep their own licences, which are listed there.
