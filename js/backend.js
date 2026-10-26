@@ -48,7 +48,8 @@ export function watchUnreal(id, onUpdate) {
   const tick = async () => {
     const st = await api(`/api/jobs/${id}`).catch((e) => ({ state: 'failed', log: e.message }));
     onUpdate(st);
-    if (!st.screenshot && st.state !== 'failed' && st.state !== 'exited') setTimeout(tick, 2000);
+    // Keep polling after the first screenshot so later, better ones appear.
+    if (st.state !== 'failed' && st.state !== 'exited') setTimeout(tick, 2000);
   };
   tick();
 }

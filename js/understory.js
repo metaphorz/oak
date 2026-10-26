@@ -11,7 +11,7 @@
 // wax myrtle shrubs reuse the photographed leaf sprigs as instances.
 
 import * as THREE from 'three';
-import { windVectors, pondGeometry } from './oakGenerator.js';
+import { windVectors, pondGeometry } from './oakGenerator.js?v=20261026171855';
 
 export const GROUND_TYPES = {
   hammock: 'Maritime hammock (litter, palmetto)',

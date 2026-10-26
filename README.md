@@ -19,14 +19,21 @@ The same tree can be shown in three renderers:
 
 ```bash
 cd /Users/paul/code/ameliaisland/oak
-node server.js            # no npm install needed
-open http://localhost:8420
+./start     # starts the local server and opens http://localhost:8420
+./stop      # stops the server and any Blender job or Unreal Editor it launched
 ```
 
-The Three.js explorer also works from any static server. The **Blender + Unreal** tab needs
-`server.js`, which finds Blender at `/Applications/Blender.app` and Unreal under
-`/Volumes/*/UnrealEngine/UE_*` or `/Users/Shared/Epic Games/UE_*`. You can override these with
-`BLENDER_PATH`, `UE_ROOT` and `PORT`.
+`./start [port]` frees the port if something is using it, then starts `server.js` in the
+background (log: `output/server.log`). It waits until the server answers, then opens the app.
+Node.js is the only requirement; there is nothing to `npm install`.
+
+The **Blender + Unreal** tab needs this local server. It finds Blender at
+`/Applications/Blender.app` and Unreal under `/Volumes/*/UnrealEngine/UE_*` or
+`/Users/Shared/Epic Games/UE_*`. You can override these with `BLENDER_PATH` and `UE_ROOT`.
+
+**After editing the web app**, run `python3 scripts/stamp_version.py` before committing. It
+stamps a fresh version (`?v=…`) into every code and data address, so browsers always load the new
+files instead of cached copies from GitHub Pages.
 
 ## GitHub Pages
 

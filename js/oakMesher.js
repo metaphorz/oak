@@ -5,7 +5,7 @@
 //  * Spanish moss: crossed, tapering ribbons along each hanging strand.
 
 import * as THREE from 'three';
-import { flareScale } from './oakGenerator.js';
+import { flareScale } from './oakGenerator.js?v=20261026171855';
 
 // Leaf rectangles in the ambientCG LeafSet022 atlas, in UV space (v up).
 // Measured from the opacity mask (2048px): x0, x1, yTop, yBottom in pixels.

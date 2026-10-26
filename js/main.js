@@ -4,17 +4,17 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 
-import { defaultParams } from './params.js';
-import { generateOak, skeletonToJSON, windVectors } from './oakGenerator.js';
-import { buildBarkGeometry, buildLeafMesh, buildMossGeometry, SPRIG, LEAF_RECTS, LEAF_ASPECT } from './oakMesher.js';
+import { defaultParams } from './params.js?v=20261026171855';
+import { generateOak, skeletonToJSON, windVectors } from './oakGenerator.js?v=20261026171855';
+import { buildBarkGeometry, buildLeafMesh, buildMossGeometry, SPRIG, LEAF_RECTS, LEAF_ASPECT } from './oakMesher.js?v=20261026171855';
 import {
   shared, createBarkMaterial, updateBarkMaterial, createLeafMaterials, updateLeafMaterial,
   createMossTexture, createMossMaterials, setMossTone, createUnderstoryMaterial,
-} from './materials.js';
-import { createRenderer, createEnvironment, updateEnvironment, animateSpray, sunDirection, ATMOSPHERES } from './scene.js';
-import { buildPanel, buildPresetSelect, compassName } from './ui.js';
-import * as backend from './backend.js';
-import { generateUnderstory, understoryToJSON } from './understory.js';
+} from './materials.js?v=20261026171855';
+import { createRenderer, createEnvironment, updateEnvironment, animateSpray, sunDirection, ATMOSPHERES } from './scene.js?v=20261026171855';
+import { buildPanel, buildPresetSelect, compassName } from './ui.js?v=20261026171855';
+import * as backend from './backend.js?v=20261026171855';
+import { generateUnderstory, understoryToJSON } from './understory.js?v=20261026171855';
 
 // ------------------------------------------------------------------ state ---
 
@@ -331,8 +331,8 @@ function renderGallery(cat) {
 // photos/manifest.local.json lists copyrighted reference photos kept only on
 // this machine (git-ignored); on GitHub Pages it is simply absent.
 Promise.all([
-  fetch('photos/manifest.json').then((r) => r.json()),
-  fetch('photos/manifest.local.json').then((r) => (r.ok ? r.json() : [])).catch(() => []),
+  fetch('photos/manifest.json?v=20261026171855').then((r) => r.json()),
+  fetch('photos/manifest.local.json?v=20261026171855').then((r) => (r.ok ? r.json() : [])).catch(() => []),
 ]).then(([list, local]) => {
   photos = [...list, ...local];
   list = photos;
@@ -469,6 +469,11 @@ function logTo(text) {
   el.scrollTop = el.scrollHeight;
 }
 
+function elapsed(t0) {
+  const s = Math.round((Date.now() - t0) / 1000);
+  return s < 60 ? `${s}s` : `${Math.floor(s / 60)}m ${s % 60}s`;
+}
+
 async function runBlender(mode) {
   const samples = +$('bl-samples').value;
   const res = $('bl-res').value;
@@ -478,9 +483,12 @@ async function runBlender(mode) {
   logTo('Growing ultra-quality skeleton and sending it to Blender…');
   const payload = await buildPayload({ mode, render: { samples, resolution: res, engine, device } });
   const job = await backend.blenderBuild(payload);
+  const t0 = Date.now();
   return backend.watch(job.id, (st) => {
     logTo(st.log);
-    $('engine-progress-label').textContent = st.state === 'running' ? `Blender: ${st.phase || 'working'}…` : `Blender: ${st.state}`;
+    $('engine-progress-label').textContent = st.state === 'running'
+      ? `Blender: ${(st.phase || 'working').replace(/\s*\[[\d.]+s\]$/, '')} · ${elapsed(t0)}`
+      : `Blender: ${st.state}`;
   });
 }
 
@@ -509,16 +517,30 @@ $('btn-blender-open').addEventListener('click', async () => {
 $('btn-unreal').addEventListener('click', async () => {
   try {
     const st = await runBlender('export');
-    if (st.state !== 'done') throw new Error('Blender export failed — see log');
+    if (st.state !== 'done') {
+      $('engine-progress').hidden = true;
+      throw new Error('Blender export failed — see log');
+    }
     logTo(st.log + '\n\nLaunching Unreal Engine… (first launch compiles shaders and can take several minutes)');
     const u = await backend.unrealSend({ jobId: st.id, camera: cameraInfo(), sun: sunDirection(params.timeOfDay).toArray(), params });
     $('engine-progress-label').textContent = 'Unreal: launching editor…';
+    const t0 = Date.now();
+    let lastShot = null;
     backend.watchUnreal(u.id, (us) => {
       logTo(us.log);
-      $('engine-progress-label').textContent = `Unreal: ${us.phase || us.state}`;
+      $('engine-progress-label').textContent = `Unreal: ${us.phase || us.state} · ${elapsed(t0)}`;
       if (us.screenshot) {
         $('engine-progress').hidden = true;
-        showResult({ outputs: { render: us.screenshot } }, 'Unreal Engine 5 (Lumen)');
+        // Later screenshots (after shaders finish compiling) replace the image quietly.
+        if (us.screenshot !== lastShot) {
+          if (!lastShot) showResult({ outputs: { render: us.screenshot } }, 'Unreal Engine 5 (Lumen)');
+          else $('result-img').src = us.screenshot;
+          lastShot = us.screenshot;
+        }
+      } else if (us.state === 'failed' || us.state === 'exited') {
+        // The editor ended without producing a screenshot: never leave "Working…" up.
+        $('engine-progress').hidden = true;
+        alertBar(`Unreal ${us.state === 'failed' ? 'failed' : 'closed'} before a screenshot was saved — see the log.`);
       }
     });
   } catch (err) {
