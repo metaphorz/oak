@@ -4,7 +4,7 @@
   "category": "field",
   "title": "Maritime forest live oaks: low, sinuous, moss-covered limbs under a leafy roof",
   "author": "Paul Fishwick",
-  "license": "own",
+  "license": "\u00a9 Paul Fishwick",
   "source": ""
  },
  {
@@ -12,7 +12,7 @@
   "category": "field",
   "title": "Wind-trained coastal live oaks: curved, leaning trunks and crooked branching",
   "author": "Paul Fishwick",
-  "license": "own",
+  "license": "\u00a9 Paul Fishwick",
   "source": ""
  },
  {
@@ -20,7 +20,7 @@
   "category": "field",
   "title": "Dense, crooked ramification coated in moss",
   "author": "Paul Fishwick",
-  "license": "own",
+  "license": "\u00a9 Paul Fishwick",
   "source": ""
  },
  {
@@ -28,23 +28,23 @@
   "category": "field",
   "title": "Wind-sculpted coastal cypress (not oak): progressive leeward curvature",
   "author": "Paul Fishwick",
-  "license": "own",
+  "license": "\u00a9 Paul Fishwick",
   "source": ""
  },
  {
   "src": "photos/images.jpg",
   "category": "field",
   "title": "Open-grown live oak: broad dome, heavy Spanish moss (little salt exposure)",
-  "author": "Paul Fishwick",
-  "license": "own",
+  "author": "Provided by Paul Fishwick (original photographer not recorded)",
+  "license": "source unknown",
   "source": ""
  },
  {
   "src": "meshy/image_8175b90a-74f0-449a-8ef2-d5ebb10030b5_0.webp",
   "category": "field",
   "title": "Meshy synthetic reference image",
-  "author": "Paul Fishwick",
-  "license": "own",
+  "author": "Generated with Meshy AI by Paul Fishwick",
+  "license": "AI-generated",
   "source": ""
  },
  {
@@ -323,7 +323,7 @@
   "src": "photos/web/form/Brookgreen_Gardens_Oak_Alley1.jpg",
   "category": "form",
   "title": "Brookgreen Gardens Oak Alley1.jpg",
-  "author": "unknown",
+  "author": "Doug Coldwell (self-photographed)",
   "license": "CC BY-SA 3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Brookgreen_Gardens_Oak_Alley1.jpg"
  },
@@ -707,7 +707,7 @@
   "src": "photos/web/spanish-moss/Spanish-moss-tree.jpg",
   "category": "spanish-moss",
   "title": "Spanish-moss-tree.jpg",
-  "author": "unknown",
+  "author": "Phr (Wikimedia Commons uploader)",
   "license": "CC BY-SA 3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Spanish-moss-tree.jpg"
  },
@@ -755,7 +755,7 @@
   "src": "photos/web/form/USMC-110610-M-MX359-025.jpg",
   "category": "form",
   "title": "USMC-110610-M-MX359-025.jpg",
-  "author": "unknown",
+  "author": "U.S. Marine Corps (ID 110610-M-MX359-025)",
   "license": "Public domain",
   "source": "https://commons.wikimedia.org/wiki/File:USMC-110610-M-MX359-025.jpg"
  },

@@ -301,13 +301,19 @@ function renderGallery(cat) {
     img.loading = 'lazy';
     const cap = document.createElement('figcaption');
     cap.textContent = ph.title;
+    if (ph.author) {
+      const by = document.createElement('small');
+      by.className = 'credit';
+      by.textContent = `${ph.author.replace(/\s+/g, ' ')} · ${ph.license}`;
+      cap.append(by);
+    }
     fig.append(img, cap);
     fig.addEventListener('click', () => {
       lightboxItem = ph;
       $('lightbox-img').src = ph.src;
       $('lightbox-cap').innerHTML = '';
       const t = document.createElement('span');
-      t.textContent = ph.title + (ph.author ? ` — ${ph.author.replace(/\s+/g, ' ').slice(0, 60)}, ${ph.license}` : '');
+      t.textContent = ph.title + (ph.author ? ` — ${ph.author.replace(/\s+/g, ' ')}, ${ph.license}` : '');
       $('lightbox-cap').append(t);
       if (ph.source) {
         const a = document.createElement('a');
@@ -350,7 +356,7 @@ Promise.all([
 $('btn-pin').addEventListener('click', () => {
   if (!lightboxItem) return;
   $('pinned-img').src = lightboxItem.src;
-  $('pinned-cap').textContent = lightboxItem.title;
+  $('pinned-cap').textContent = lightboxItem.title + (lightboxItem.author ? ` — ${lightboxItem.author.replace(/\s+/g, ' ')}` : '');
   $('pinned').hidden = false;
   $('lightbox').close();
   $('gallery').close();

@@ -39,7 +39,7 @@ and salt/wind effects against real live oaks. Each file keeps its original licen
 | salt-and-coast | Boneyard_Beach_on_Bulls_Island_4880451924_.jpg | U.S. Fish and Wildlife Service Southeast Region | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Boneyard_Beach_on_Bulls_Island_(4880451924).jpg) |
 | salt-and-coast | Boneyard_beach_bulls_island.jpg | Kirby Adams. Lansing, Michigan. | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Boneyard_beach_bulls_island.jpg) |
 | salt-and-coast | Botany_Bay_SC.jpg | Mollz03 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Botany_Bay,_SC.jpg) |
-| form | Brookgreen_Gardens_Oak_Alley1.jpg | unknown | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Brookgreen_Gardens_Oak_Alley1.jpg) |
+| form | Brookgreen_Gardens_Oak_Alley1.jpg | Doug Coldwell (self-photographed) | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Brookgreen_Gardens_Oak_Alley1.jpg) |
 | form | Camp_Salmen_Live_Oak.jpg | St. Tammany Parish Government | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Camp_Salmen_Live_Oak.jpg) |
 | form | Charles-towne-live-oak-avenue-sc1.jpg | Brian Stansberry | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Charles-towne-live-oak-avenue-sc1.jpg) |
 | form | Constitution_Oak_in_Geneva_Alabama.jpg | AlabamaGuy2007 at English Wikipedia | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Constitution_Oak_in_Geneva,_Alabama.jpg) |
@@ -87,12 +87,29 @@ and salt/wind effects against real live oaks. Each file keeps its original licen
 | form | Quercus_virginiana_kz12.jpg | Krzysztof Ziarnek, Kenraiz | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Quercus_virginiana_kz12.jpg) |
 | form | Sheltering_Arms_-_Flickr_-_jan_buchholtz.jpg | jan buchholtz from Houston, TEXAS, USA | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Sheltering_Arms_-_Flickr_-_jan_buchholtz.jpg) |
 | form | Southern_live_oak_with_resurrection_fern_San_Bernard_National_Wildlife_Refuge.jpg | William L. Farr | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Southern_live_oak_with_resurrection_fern,_San_Bernard_National_Wildlife_Refuge.jpg) |
-| spanish-moss | Spanish-moss-tree.jpg | unknown | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Spanish-moss-tree.jpg) |
+| spanish-moss | Spanish-moss-tree.jpg | Phr (Wikimedia Commons uploader) | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Spanish-moss-tree.jpg) |
 | spanish-moss | Spanish_moss_in_live_oak_-_Flickr_-_pellaea.jpg | Jason Hollinger | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Spanish_moss_in_live_oak_-_Flickr_-_pellaea.jpg) |
 | form | Tallahassee_FL_Lichgate_Oak01.jpg | Ebyabe | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tallahassee_FL_Lichgate_Oak01.jpg) |
 | form | Tallahassee_FL_Lichgate_Oak02.jpg | Ebyabe | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tallahassee_FL_Lichgate_Oak02.jpg) |
 | form | Tallahassee_FL_Lichgate_Oak03.jpg | Ebyabe | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Tallahassee_FL_Lichgate_Oak03.jpg) |
 | form | The_Angel_Oak_Tree_as_seen_in_2022.jpg | Lightbulb Noob | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:The_Angel_Oak_Tree,_as_seen_in_2022.jpg) |
-| form | USMC-110610-M-MX359-025.jpg | unknown | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:USMC-110610-M-MX359-025.jpg) |
+| form | USMC-110610-M-MX359-025.jpg | U.S. Marine Corps (ID 110610-M-MX359-025) | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:USMC-110610-M-MX359-025.jpg) |
 | form | Washington-oak-hampton-sc1.jpg | Brian Stansberry (photographer) | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Washington-oak-hampton-sc1.jpg) |
 | form | Wiess_Park_Beaumont_Texas_1604281350_26170345333_.jpg | Patrick Feller from Humble, Texas, USA | CC BY 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Wiess_Park,_Beaumont,_Texas_1604281350_(26170345333).jpg) |
+
+## Field photos and other images
+
+| File | Credit | Licence |
+|---|---|---|
+| photos/01100001.JPG, 08140006.JPG, DSC03567.JPG, DSC03571.JPG | Paul Fishwick | © Paul Fishwick |
+| photos/images.jpg | Provided by Paul Fishwick; original photographer not recorded | source unknown |
+| meshy/image_8175b90a-…webp | Generated with Meshy AI by Paul Fishwick | AI-generated |
+
+## Local-only references (not published)
+
+When run locally, the gallery's **Live Oak Society** tab shows 30 photos by **Coleen Perilloux
+Landry**, chairman of the Live Oak Society, from her PBase gallery
+[pbase.com/septembermorn/the_live_oak_tree](https://pbase.com/septembermorn/the_live_oak_tree).
+They are © Coleen Perilloux Landry, all rights reserved, and are used only as local modelling
+reference. They are not in this repository.
+

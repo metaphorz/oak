@@ -162,6 +162,7 @@ body[data-engine='offline'] .engine-panel { display: block; }
 .gallery-grid figure { margin: 0; cursor: zoom-in; border-radius: 10px; overflow: hidden; background: var(--panel-2); border: 1px solid var(--line); }
 .gallery-grid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; }
 .gallery-grid figcaption { padding: 8px 10px; font-size: 12px; color: var(--muted); }
+.gallery-grid figcaption .credit { display: block; margin-top: 3px; font-size: 11px; color: #7f8f88; }
 .lightbox { max-width: 94vw; max-height: 94vh; padding: 0; position: relative; }
 .lightbox img { max-width: 94vw; max-height: 86vh; display: block; }
 .lightbox-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 12px; }
