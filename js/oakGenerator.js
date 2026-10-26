@@ -597,39 +597,67 @@ export function generateOak(p, opts = {}) {
     }
   }
 
-  // Roots: radiating from the base; those on the wind axis are much larger.
+  // Roots: an irregular set of buttress and surface roots. Count, spacing,
+  // thickness and length all vary; the ones on the wind axis are larger.
+  // Each root tapers fast near the trunk (the zone of rapid taper), then
+  // slowly; it snakes, rises and dips along the surface and may fork.
   const roots = [];
   if (p.rootSpread > 0 || p.rootXray) {
     const rr = rngFor(p.seed, 99);
-    const n = 9;
+    const n = 6 + Math.floor(rr() * 6);
     const axis = Math.atan2(wind.from.z, wind.from.x);
-    for (let i = 0; i < n; i++) {
-      const phi = (i / n) * Math.PI * 2 + rr.sym(0.25);
-      const ac = Math.abs(Math.cos(phi - axis));
-      const wAxis = p.buttress * p.windStrength * windYears;
-      const size = (0.5 + 0.6 * p.rootSpread) * (0.65 + 1.1 * wAxis * ac * ac) * ageF;
-      const dir = new THREE.Vector3(Math.cos(phi), -0.05, Math.sin(phi)).normalize();
-      const R0 = trunkR * 0.5 * size;
-      if (R0 < 0.01) continue;
-      const L = (p.rootXray ? 6 : 2.2) * trunkR * (0.8 + size) + 0.5;
-      const ns = p.rootXray ? 14 : 8;
-      const pos = new THREE.Vector3(Math.cos(phi) * trunkR * 0.3, 0.25 * trunkR, Math.sin(phi) * trunkR * 0.3);
+    const wAxis = p.buttress * p.windStrength * windYears;
+    // Uneven spacing: random gaps, normalised to a full circle.
+    const gaps = Array.from({ length: n }, () => rr.range(0.4, 1.6));
+    const gsum = gaps.reduce((x, y) => x + y, 0);
+    let phi = rr() * Math.PI * 2;
+    const grow = (start, dir0, R0, L, depth, rootRng) => {
+      const ns = Math.max(4, Math.round((p.rootXray ? 16 : 10) * Math.min(1, L / 4) + 3));
+      const pos = start.clone();
+      const dir = dir0.clone();
       const pts = [pos.clone()];
       const radii = [R0];
       const dirs = [dir.clone()];
+      let turn = 0;
+      const wavePh = rootRng() * 6.28;
+      const waveF = rootRng.range(2, 5);
       for (let s = 1; s <= ns; s++) {
         const t = s / ns;
-        dir.applyAxisAngle(UP, rr.sym(0.25));
-        dir.y = -0.12 - (p.rootXray ? 0.15 * t : 0.05);
+        turn = turn * 0.7 + rootRng.sym(0.35);
+        dir.applyAxisAngle(UP, turn);
+        dir.y = p.rootXray ? -0.1 - 0.25 * t * rootRng() : -0.05;
         dir.normalize();
         pos.addScaledVector(dir, L / ns);
-        // Surface roots hug the ground before diving.
-        if (!p.rootXray) pos.y = Math.max(pos.y, R0 * (0.35 - 0.9 * t));
+        // Rapid taper for the first ~20%, then slow.
+        const r = R0 * (0.35 + 0.65 * Math.exp(-t * 7)) * (1 - 0.8 * t);
+        if (!p.rootXray) {
+          // Surface roots ride along the sand, humping up and sinking in.
+          const hump = Math.max(0, Math.sin(wavePh + t * waveF * Math.PI)) * r * 0.6;
+          pos.y = Math.max(-r * 0.6, r * (0.45 - 1.2 * t) + hump);
+        }
         pts.push(pos.clone());
-        radii.push(R0 * (1 - 0.85 * t));
+        radii.push(Math.max(0.008, r));
         dirs.push(dir.clone());
+        // Occasional fork into a smaller lateral root.
+        if (depth === 0 && s > 1 && s < ns - 2 && rootRng() < 0.18) {
+          const side = rootRng() < 0.5 ? 1 : -1;
+          const d2 = dir.clone().applyAxisAngle(UP, side * rootRng.range(0.5, 1.1));
+          grow(pos.clone(), d2, r * rootRng.range(0.45, 0.7), L * (1 - t) * rootRng.range(0.4, 0.8), 1, rootRng);
+        }
       }
-      roots.push({ level: 1, points: pts, radii, dirs, root: true, parent: 0, joint: 0 });
+      roots.push({ level: 1 + depth, points: pts, radii, dirs, root: true, parent: 0, joint: 0 });
+    };
+    for (let i = 0; i < n; i++) {
+      phi += (gaps[i] / gsum) * Math.PI * 2;
+      const ac = Math.abs(Math.cos(phi - axis));
+      // Log-normal size variation plus wind-axis reinforcement.
+      const size = (0.45 + 0.6 * p.rootSpread) * Math.exp(rr.sym(0.45)) * (0.65 + 1.1 * wAxis * ac * ac) * ageF;
+      const R0 = trunkR * 0.5 * size;
+      if (R0 < 0.01) continue;
+      const L = ((p.rootXray ? 6 : 2.2) * trunkR * (0.8 + size) + 0.5) * rr.range(0.45, 1.4);
+      const dir = new THREE.Vector3(Math.cos(phi), -0.05, Math.sin(phi)).normalize();
+      const start = new THREE.Vector3(Math.cos(phi) * trunkR * 0.3, 0.25 * trunkR, Math.sin(phi) * trunkR * 0.3);
+      grow(start, dir, R0, L, 0, rngFor(p.seed, 990 + i));
     }
   }
 

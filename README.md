@@ -115,6 +115,24 @@ The pond behaviour comes out of the same rule. Measured on the pond preset:
 
 On the sheltered tree, south-side leaves grow from 51% to 59% as Light seeking goes from 0 to 1.
 
+### Atmosphere, bark and roots
+- **Atmosphere** (under *Environment*) offers seven skies: clear, golden hour, overcast, morning
+  sea fog, storm approaching, dusk and moonlight.
+  - Each sets the CC0 pure-sky HDRI, sun strength and colour, haze and exposure. Golden hour, dusk,
+    sea fog and moonlight also move the sun.
+  - They are defined once in `assets/atmospheres.json`, which three.js, Blender and Unreal all
+    read.
+  - Leaf translucency now scales with sunlight, so leaves don't glow under overcast or night skies.
+- **Scars & irregularity** (under *Bark*) adds old wounds of smooth grey wood with a dark callus
+  rim, plus lichen patches, damp streaks and broad tone variation on the trunk and every branch.
+- **Roots** are irregular in count, spacing, thickness and length. They taper quickly near the
+  trunk, snake and hump along the surface, and occasionally fork.
+- **Spanish moss** sways more than the foliage, with a light flutter, because it weighs almost
+  nothing.
+- **The retention pond** is on by default.
+
+![Atmospheres, bark scars and roots](docs/images/atmospheres_3x3.jpg)
+
 ### Spanish moss and understory
 - **Spanish moss** (*Tillandsia usneoides*) hangs from sheltered, near-horizontal limbs and avoids
   the salt-blasted windward face.
@@ -174,4 +192,4 @@ compares the same scenes across the three renderers.
 
 ## License
 
-MIT, see [LICENSE](LICENSE). Third-party textures, photos and three.js keep their own licences, which are listed there.
+MIT, see [LICENSE](LICENSE). Third-party textures, photos and three.js keep their own licences, listed in [NOTICE](NOTICE).

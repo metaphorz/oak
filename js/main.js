@@ -11,7 +11,7 @@ import {
   shared, createBarkMaterial, updateBarkMaterial, createLeafMaterials, updateLeafMaterial,
   createMossTexture, createMossMaterials, setMossTone, createUnderstoryMaterial,
 } from './materials.js';
-import { createRenderer, createEnvironment, updateEnvironment, animateSpray, sunDirection } from './scene.js';
+import { createRenderer, createEnvironment, updateEnvironment, animateSpray, sunDirection, ATMOSPHERES } from './scene.js';
 import { buildPanel, buildPresetSelect, compassName } from './ui.js';
 import * as backend from './backend.js';
 import { generateUnderstory, understoryToJSON } from './understory.js';
@@ -127,15 +127,20 @@ function buildSkeletonLines(sk) {
 
 // Keys that only touch materials or scene dressing — no regrowth needed.
 const LIGHT_KEYS = new Set([
-  'limbMoss', 'barkDarkness', 'leafDarkness', 'leafGloss', 'leafVariation', 'translucency',
+  'barkScars', 'limbMoss', 'barkDarkness', 'leafDarkness', 'leafGloss', 'leafVariation', 'translucency',
   'mossTone', 'sway', 'showShear', 'showSpray', 'showArrow', 'timeOfDay', 'ground', 'showOcean',
-  'fog', 'exposure', 'barkSet', 'understory',
+  'fog', 'exposure', 'barkSet', 'understory', 'atmosphere',
 ]);
 
 let pending = null;
 function onParam(key, value, final) {
   params[key] = value;
   try { localStorage.setItem(STORE_KEY, JSON.stringify(params)); } catch { /* ignore */ }
+  if (key === 'atmosphere' && ATMOSPHERES[value]?.time) {
+    // Golden hour, dusk and so on also move the sun.
+    params.timeOfDay = ATMOSPHERES[value].time;
+    uiControls.timeOfDay.set(params.timeOfDay);
+  }
   if (LIGHT_KEYS.has(key)) {
     applyLight(key);
     return;
@@ -561,6 +566,7 @@ function frame(now) {
   shared.uWindDir.value.copy(lee);
   shared.uWindStrength.value = params.windStrength;
   shared.uSway.value = params.sway;
+  shared.uSunLight.value = Math.min(1.2, env.sun.intensity / 3.4);
   shared.uSunDirView.value.copy(env.sun.position).normalize().transformDirection(camera.matrixWorldInverse);
   animateSpray(env.spray, dt);
   controls.update();

@@ -1,0 +1,7 @@
+Live Oak Explorer — third-party content
+
+- vendor/three: three.js, MIT License (c) 2010-2024 three.js authors.
+- Textures and HDRI in assets/: CC0 (Poly Haven, ambientCG).
+- photos/web/: Wikimedia Commons, each under the licence listed in
+  photos/web/CREDITS.md.
+- Field photos in photos/ and the Meshy reference: (c) Paul Fishwick.

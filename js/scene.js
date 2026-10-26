@@ -5,6 +5,27 @@ import * as THREE from 'three';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { createGroundMaterial } from './materials.js';
 import { windVectors } from './oakGenerator.js';
+import ATMOSPHERES from '../assets/atmospheres.json' with { type: 'json' };
+
+export { ATMOSPHERES };
+const hdrCache = new Map();
+function loadSky(scene, name) {
+  const apply = (hdr) => {
+    scene.background = hdr;
+    scene.environment = hdr;
+  };
+  if (hdrCache.has(name)) {
+    const v = hdrCache.get(name);
+    if (v) apply(v);
+    return;
+  }
+  hdrCache.set(name, null);
+  new RGBELoader().load(`assets/hdri/${name}_2k.hdr`, (hdr) => {
+    hdr.mapping = THREE.EquirectangularReflectionMapping;
+    hdrCache.set(name, hdr);
+    if (scene.userData.sky === name) apply(hdr);
+  });
+}
 
 export function createRenderer(canvas) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
@@ -20,13 +41,10 @@ export function createEnvironment(scene, renderer) {
   const env = {};
   scene.fog = new THREE.FogExp2(0xc9d3d6, 0.004);
 
-  new RGBELoader().load('assets/hdri/kloofendal_48d_partly_cloudy_puresky_2k.hdr', (hdr) => {
-    hdr.mapping = THREE.EquirectangularReflectionMapping;
-    scene.background = hdr;
-    scene.environment = hdr;
-    scene.environmentIntensity = 0.75;
-    scene.backgroundIntensity = 0.9;
-  });
+  scene.userData.sky = ATMOSPHERES.clear.hdri;
+  loadSky(scene, scene.userData.sky);
+  scene.environmentIntensity = 0.75;
+  scene.backgroundIntensity = 0.9;
 
   const sun = new THREE.DirectionalLight(0xfff1dc, 3.2);
   sun.castShadow = true;
@@ -96,10 +114,19 @@ export function updateEnvironment(env, scene, renderer, p, sk) {
   env.sun.position.copy(dir).multiplyScalar(70);
   env.sun.target.position.set(0, 4, 0);
   const warm = THREE.MathUtils.smoothstep(dir.y, 0.05, 0.5);
-  env.sun.color.setRGB(1, 0.72 + 0.22 * warm, 0.5 + 0.38 * warm);
-  env.sun.intensity = 0.6 + 2.8 * warm;
-  renderer.toneMappingExposure = p.exposure;
-  scene.fog.density = 0.0015 + p.fog * 0.012;
+  const atm = ATMOSPHERES[p.atmosphere] || ATMOSPHERES.clear;
+  const [tr, tg, tb] = atm.sunTint;
+  env.sun.color.setRGB(tr, (0.72 + 0.22 * warm) * tg, (0.5 + 0.38 * warm) * tb);
+  env.sun.intensity = (0.6 + 2.8 * warm) * atm.sun;
+  renderer.toneMappingExposure = p.exposure * atm.exposure;
+  scene.fog.color.set(atm.fogColor);
+  scene.fog.density = (0.0015 + p.fog * 0.012) * atm.fog;
+  scene.environmentIntensity = atm.env;
+  scene.backgroundIntensity = atm.bg;
+  if (scene.userData.sky !== atm.hdri) {
+    scene.userData.sky = atm.hdri;
+    loadSky(scene, atm.hdri);
+  }
 
   const canopyR = Math.max(4, sk.shear.spread || p.limbLength);
   const key = `${p.ground}|${p.rootXray}`;

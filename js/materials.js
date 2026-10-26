@@ -29,6 +29,7 @@ export const shared = {
   uWindStrength: { value: 0.5 },
   uSway: { value: 0.35 },
   uSunDirView: { value: new THREE.Vector3(0, 1, 0) },
+  uSunLight: { value: 1 }, // sun strength relative to a clear afternoon
 };
 
 const SWAY_GLSL = /* glsl */ `
@@ -61,6 +62,7 @@ export function createBarkMaterial(p) {
     roughness: 1.0,
   });
   const u = {
+    uScars: { value: p.barkScars ?? 0.45 },
     uLimbMoss: { value: p.limbMoss },
     uBarkDark: { value: p.barkDarkness },
     uDisp: { value: tex(`${base}_disp_2k.jpg`) },
@@ -70,29 +72,63 @@ export function createBarkMaterial(p) {
     Object.assign(shader.uniforms, u);
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', '#include <common>\nvarying vec3 vWorldN;')
-      .replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\nvWorldN = normalize(mat3(modelMatrix) * objectNormal);');
+      .replace('#include <common>', '#include <common>\nvarying vec3 vBarkW;')
+      .replace('#include <beginnormal_vertex>', '#include <beginnormal_vertex>\nvWorldN = normalize(mat3(modelMatrix) * objectNormal);')
+      .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvBarkW = (modelMatrix * vec4(transformed, 1.0)).xyz;');
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>
         varying vec3 vWorldN;
         uniform float uLimbMoss;
         uniform float uBarkDark;
-        uniform sampler2D uDisp;`)
+        uniform float uScars;
+        uniform sampler2D uDisp;
+        varying vec3 vBarkW;
+        float bHash(vec3 p) { return fract(sin(dot(p, vec3(127.1, 311.7, 74.7))) * 43758.5453); }
+        float bNoise(vec3 p) {
+          vec3 i = floor(p), f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+          return mix(mix(mix(bHash(i), bHash(i + vec3(1,0,0)), f.x), mix(bHash(i + vec3(0,1,0)), bHash(i + vec3(1,1,0)), f.x), f.y),
+                     mix(mix(bHash(i + vec3(0,0,1)), bHash(i + vec3(1,0,1)), f.x), mix(bHash(i + vec3(0,1,1)), bHash(i + vec3(1,1,1)), f.x), f.y), f.z);
+        }
+        float bFbm(vec3 p) { return 0.5 * bNoise(p) + 0.3 * bNoise(p * 2.1) + 0.2 * bNoise(p * 4.3); }`)
       .replace('#include <map_fragment>', `#include <map_fragment>
         float disp = texture2D(uDisp, vMapUv).r;
         diffuseColor.rgb *= mix(1.0, 0.55, uBarkDark);
+        // Irregularity: broad tone variation, grey lichen patches and damp
+        // streaks running down the bark, so the photo texture never repeats visibly.
+        float tone = bFbm(vBarkW * 0.45);
+        diffuseColor.rgb *= 1.0 + (tone - 0.5) * 0.5 * uScars;
+        float lichen = smoothstep(0.6, 0.75, bFbm(vBarkW * 0.9 + 7.3)) * uScars;
+        diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.55, 0.57, 0.5) * (0.7 + 0.5 * disp), lichen * 0.55);
+        float streak = smoothstep(0.55, 0.8, bNoise(vec3(vBarkW.x * 2.5, vBarkW.y * 0.25, vBarkW.z * 2.5))) * uScars;
+        diffuseColor.rgb *= 1.0 - 0.3 * streak;
+        // Scars: occasional old wounds where bark has fallen away, exposing
+        // smoother grey wood, ringed by a darker swollen callus.
+        float sn = bFbm(vBarkW * vec3(1.1, 0.55, 1.1) + 31.0);
+        float thr = 0.74 - 0.12 * uScars;
+        float scar = smoothstep(thr, thr + 0.02, sn) * step(0.01, uScars);
+        float rim = (smoothstep(thr - 0.05, thr, sn) - scar) * step(0.01, uScars);
+        vec3 wood = vec3(0.47, 0.42, 0.36) * (0.8 + 0.4 * bNoise(vBarkW * vec3(30.0, 3.0, 30.0)));
+        diffuseColor.rgb = mix(diffuseColor.rgb, wood, scar);
+        diffuseColor.rgb *= 1.0 - 0.35 * rim;
         // Moss and resurrection fern settle on upward faces and in bark furrows.
         float up = vWorldN.y + (0.5 - disp) * 0.7;
         float mossAmt = smoothstep(0.8 - uLimbMoss * 1.0, 1.1 - uLimbMoss * 0.7, up) * min(1.0, uLimbMoss * 1.15);
         vec3 mossCol = mix(vec3(0.16, 0.22, 0.07), vec3(0.32, 0.38, 0.13), disp);
         diffuseColor.rgb = mix(diffuseColor.rgb, mossCol, mossAmt);`)
       .replace('#include <roughnessmap_fragment>', `#include <roughnessmap_fragment>
-        roughnessFactor = mix(roughnessFactor, 0.95, mossAmt);`);
+        roughnessFactor = mix(roughnessFactor, 0.95, mossAmt);
+        roughnessFactor = mix(roughnessFactor, 0.7, scar);`)
+      .replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
+        // Exposed wood is smooth: flatten the bark relief inside scars.
+        normal = normalize(mix(normal, nonPerturbedNormal, scar * 0.85));`);
   };
   mat.customProgramCacheKey = () => 'oakbark';
   return mat;
 }
 
 export function updateBarkMaterial(mat, p) {
+  mat.userData.uniforms.uScars.value = p.barkScars ?? 0.45;
   mat.userData.uniforms.uLimbMoss.value = p.limbMoss;
   mat.userData.uniforms.uBarkDark.value = p.barkDarkness;
 }
@@ -175,7 +211,8 @@ export function createLeafMaterials(p) {
         uniform float uVariation;
         uniform float uTranslucency;
         uniform sampler2D uScatter;
-        uniform vec3 uSunDirView;`)
+        uniform vec3 uSunDirView;
+        uniform float uSunLight;`)
       .replace('#include <map_fragment>', `#include <map_fragment>
         vec3 c = diffuseColor.rgb * uTint;
         // Per-leaf hue/value variation.
@@ -195,7 +232,8 @@ export function createLeafMaterials(p) {
         // Light passing through the blade when the sun is behind it.
         float scatter = texture2D(uScatter, vAtlasUv).r;
         float back = pow(max(0.0, dot(normalize(-vViewPosition), -uSunDirView) * 0.5 + 0.5), 4.0);
-        totalEmissiveRadiance += diffuseColor.rgb * vec3(1.0, 1.1, 0.6) * scatter * back * uTranslucency * 0.9;`);
+        // Translucency only exists where the sun shines through the blade.
+        totalEmissiveRadiance += diffuseColor.rgb * vec3(1.0, 1.1, 0.6) * scatter * back * uTranslucency * 0.9 * uSunLight;`);
     shader.fragmentShader = f;
   };
   mat.customProgramCacheKey = () => 'oakleaf';
@@ -295,7 +333,9 @@ export function createMossMaterials(p, mossTex) {
       .replace('#include <common>', `#include <common>\nattribute float aSway;\n${SWAY_GLSL}`)
       .replace('#include <project_vertex>', `
         vec4 worldP = modelMatrix * vec4(transformed, 1.0);
-        worldP.xyz += windSway(worldP.xyz, aSway * aSway * 0.45);
+        // Spanish moss weighs almost nothing: large, slower swing plus a quick flutter.
+        float flutter = sin(uTime * 7.3 + worldP.x * 3.1 + worldP.z * 2.7) * 0.06 * aSway;
+        worldP.xyz += windSway(worldP.xyz, aSway * aSway * 1.15) + vec3(flutter, 0.0, flutter * 0.7) * (0.4 + uSway);
         vec4 mvPosition = viewMatrix * worldP;
         gl_Position = projectionMatrix * mvPosition;`);
   };
