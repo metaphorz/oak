@@ -23,3 +23,11 @@ node_modules/
 # PBase photos: copyrighted, kept as local reference only (never published)
 photos/pbase-reference/
 photos/manifest.local.json
+
+# Local-only tooling
+server.js
+start
+stop
+blender/
+unreal/
+tools/
