@@ -34,8 +34,9 @@ export const SCHEMA = [
       { key: 'trunkHeight', label: 'First limb height', min: 0.3, max: 6, step: 0.1, value: 1.6, unit: 'm', help: 'Live oaks branch low, keeping the centre of gravity low against wind load.' },
       { key: 'trunkLength', label: 'Trunk length', min: 1.5, max: 14, step: 0.1, value: 3.4, unit: 'm', help: 'Open-grown live oaks have a short, massive trunk that divides into several huge limbs.' },
       { key: 'trunkRadius', label: 'Trunk radius', min: 0.15, max: 1.4, step: 0.01, value: 0.7, unit: 'm', help: 'Radius at 150 years; younger trees are thinner.' },
+      { key: 'lowSplit', label: 'Low division', min: 0, max: 1, step: 0.01, value: 0.35, help: 'How close to the ground the trunk divides into massive limbs. High values give no obvious single trunk, just several trunk-sized limbs.' },
       { key: 'trunkGnarl', label: 'Trunk twist', min: 0, max: 1, step: 0.01, value: 0.35 },
-      { key: 'rootFlare', label: 'Root flare', min: 0, max: 1, step: 0.01, value: 0.55, help: 'Swelling of the trunk base.' },
+      { key: 'rootFlare', label: 'Root collar', min: 0, max: 1, step: 0.01, value: 0.55, help: 'Short swelling where the roots meet the trunk.' },
       { key: 'buttress', label: 'Wind buttressing', min: 0, max: 1, step: 0.01, value: 0.65, help: 'Roots and base thicken along the wind axis: tension roots windward, compression roots leeward.' },
       { key: 'rootSpread', label: 'Surface roots', min: 0, max: 1, step: 0.01, value: 0.55 },
       { key: 'rootXray', label: 'X-ray root plate', type: 'bool', value: false, help: 'Make the ground translucent to see the root system.' },
@@ -83,6 +84,8 @@ export const SCHEMA = [
     group: 'Foliage',
     open: false,
     params: [
+      { key: 'showLeaves', label: 'Show leaves', type: 'bool', value: true, help: 'Hide the foliage to see the trunk, limbs and branch architecture.' },
+      { key: 'showMoss', label: 'Show Spanish moss', type: 'bool', value: true },
       { key: 'fullness', label: 'Canopy fullness', min: 0, max: 1, step: 0.01, value: 0.75, help: 'From an open, airy crown to the closed foliage shell of a mature live oak (more twigs, more and larger leaf sprigs).' },
       { key: 'leafDensity', label: 'Sprigs per twig', min: 0, max: 80, step: 1, value: 42, help: 'Each sprig carries five leaves.' },
       { key: 'leafSize', label: 'Leaf size', min: 0.04, max: 0.3, step: 0.005, value: 0.12, unit: 'm', help: 'Real live oak leaves are 4–10 cm.' },
@@ -173,7 +176,7 @@ export const PRESETS = {
   // circumference, 78 ft tall, 180 ft spread, 200–300 years old, twelve
   // major limbs that reach the ground and curve back upward.
   'Florida champion (Alachua)': {
-    age: 260, trunkRadius: 1.14, trunkLength: 3.2, trunkHeight: 1.8, rootFlare: 0.85, buttress: 0.3,
+    age: 260, trunkRadius: 1.14, trunkLength: 3.2, trunkHeight: 1.8, rootFlare: 0.85, buttress: 0.3, lowSplit: 0.5,
     limbCount: 12, limbLength: 25.5, limbAngle: 76, limbSag: 0.9, limbClearance: 0, tipUpturn: 0.85,
     windStrength: 0.15, saltExposure: 0.03, windLean: 0.1, flagging: 0.05, saltBurn: 0,
     fullness: 0.9, mossDensity: 0.75, mossLength: 1.6, lichen: 0.65, barkScars: 0.5,

@@ -8,22 +8,6 @@
   "description": "The tree at dusk."
  },
  {
-  "file": "FriendshipOak2_2011.jpg",
-  "title": "File:FriendshipOak2 2011.jpg",
-  "author": "Woodlot",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:FriendshipOak2_2011.jpg",
-  "description": "Friendship Oak on the Gulf Park campus of the University of Southern Mississippi, Long Beach, Mississippi, USA"
- },
- {
-  "file": "FriendshipOakLimbs.jpg",
-  "title": "File:FriendshipOakLimbs.jpg",
-  "author": "Woodlot",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:FriendshipOakLimbs.jpg",
-  "description": "Limb structure of Friendship Oak, Long Beach, Harrison County, Mississippi, USA"
- },
- {
   "file": "Gardenology.org-IMG_2478_ucla09.jpg",
   "title": "File:Gardenology.org-IMG 2478 ucla09.jpg",
   "author": "Raffi Kojian",
@@ -62,14 +46,6 @@
   "license": "CC BY-SA 3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Quercus_virginiana_2010.jpg",
   "description": "Quercus virginiana along the shore of the Gulf of Mexico, Gulfport, Mississippi, USA"
- },
- {
-  "file": "Quercus_virginiana_2_nautical2k_.jpg",
-  "title": "File:Quercus virginiana 2 (nautical2k).jpg",
-  "author": "josh jackson",
-  "license": "CC BY 2.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Quercus_virginiana_2_(nautical2k).jpg",
-  "description": "Quercus virginiana (Southern Live Oak)"
  },
  {
   "file": "Quercus_virginiana_bark_1_LR.jpg",
@@ -152,14 +128,6 @@
   "description": "Fairchild Oak  -- Live Oak  - One of the oldest and largest in the U.S.    - Ormond Beach Florida  Bulow Creek State Park  Quercus virginiana - southern live oa"
  },
  {
-  "file": "Floral_City_Hist_Dist_-_Oak01.jpg",
-  "title": "File:Floral City Hist Dist - Oak01.jpg",
-  "author": "Ebyabe",
-  "license": "CC BY 2.5",
-  "source": "https://commons.wikimedia.org/wiki/File:Floral_City_Hist_Dist_-_Oak01.jpg",
-  "description": "Oak in the Floral City Historic District, in Floral City, Florida"
- },
- {
   "file": "Hatchbend_Landing_oak.jpg",
   "title": "File:Hatchbend Landing oak.jpg",
   "author": "The Bushranger",
@@ -174,14 +142,6 @@
   "license": "CC BY 2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Live_Oak_(2)_(42189246890).jpg",
   "description": "Found in Oscar Scherer State Park, Florida"
- },
- {
-  "file": "Oak_in_Old_Magnolia_Road.jpg",
-  "title": "File:Oak in Old Magnolia Road.jpg",
-  "author": "The Bushranger",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Oak_in_Old_Magnolia_Road.jpg",
-  "description": "Live oak tree in the middle of Old Magnolia Road in Leon County, Florida."
  },
  {
   "file": "Ormond_Beach_FL_Bulow_Creek_SP_Fairchild_Oak01.jpg",
@@ -264,46 +224,6 @@
   "description": "Quercus virginiana in Mahogany Hammock, Everglades NP, Florida, USA"
  },
  {
-  "file": "Sarasota_-_Oak_Tree_at_Church_of_the_Palms.jpg",
-  "title": "File:Sarasota - Oak Tree at Church of the Palms.jpg",
-  "author": "Roger W",
-  "license": "CC BY-SA 2.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Sarasota_-_Oak_Tree_at_Church_of_the_Palms.jpg",
-  "description": "A large, old live oak tree at Church of the Palms, Sarasota, Florida.  The tree is well over 100 years old, possibly even 200.  It is in a courtyard between the"
- },
- {
-  "file": "Saxon_House_Brooksville_tree01.jpg",
-  "title": "File:Saxon House Brooksville tree01.jpg",
-  "author": "Ebyabe",
-  "license": "CC BY 2.5",
-  "source": "https://commons.wikimedia.org/wiki/File:Saxon_House_Brooksville_tree01.jpg",
-  "description": "Oak tree in front of Saxon House, in Brooksville, Florida"
- },
- {
-  "file": "Sebastian_FL_East_HD_Hardee_Oak01.jpg",
-  "title": "File:Sebastian FL East HD Hardee Oak01.jpg",
-  "author": "Ebyabe",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Sebastian_FL_East_HD_Hardee_Oak01.jpg",
-  "description": "Sebastian, Florida:\n\nOld Town Sebastian Historic District, East: Hardee Oak"
- },
- {
-  "file": "Sebastian_FL_East_HD_Hardee_Oak02.jpg",
-  "title": "File:Sebastian FL East HD Hardee Oak02.jpg",
-  "author": "Ebyabe",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Sebastian_FL_East_HD_Hardee_Oak02.jpg",
-  "description": "Sebastian, Florida:\n\nOld Town Sebastian Historic District, East: Hardee Oak"
- },
- {
-  "file": "Sebastian_FL_East_HD_Hardee_Oak03.jpg",
-  "title": "File:Sebastian FL East HD Hardee Oak03.jpg",
-  "author": "Ebyabe",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Sebastian_FL_East_HD_Hardee_Oak03.jpg",
-  "description": "Sebastian, Florida:\n\nOld Town Sebastian Historic District, East: Hardee Oak"
- },
- {
   "file": "Tallahassee_FL_Lichgate_Oak01.jpg",
   "title": "File:Tallahassee FL Lichgate Oak01.jpg",
   "author": "Ebyabe",
@@ -312,52 +232,12 @@
   "description": "Tallahassee, Florida: Lichgate on High Road: Lichgate Oak"
  },
  {
-  "file": "Boone-hall-avenue-of-oaks-sc1.jpg",
-  "title": "File:Boone-hall-avenue-of-oaks-sc1.jpg",
-  "author": "Brian Stansberry",
-  "license": "CC BY 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Boone-hall-avenue-of-oaks-sc1.jpg",
-  "description": "Avenue of Oaks at Boone Hall in Charleston, South Carolina."
- },
- {
-  "file": "Candler_Oak_Tree.jpg",
-  "title": "File:Candler Oak Tree.jpg",
-  "author": "MVaughanK",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Candler_Oak_Tree.jpg",
-  "description": "Candler Oak Tree"
- },
- {
-  "file": "Chandler_Oak_in_Savannah_Georgia.jpg",
-  "title": "File:Chandler Oak in Savannah, Georgia.JPG",
-  "author": "Daniel Mayer",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Chandler_Oak_in_Savannah,_Georgia.JPG",
-  "description": "Image of Savannah, Georgia[1]"
- },
- {
   "file": "Drexel_Park_Live_Oak.jpg",
   "title": "File:Drexel Park Live Oak.JPG",
   "author": "Michael Rivera",
   "license": "CC BY-SA 3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Drexel_Park_Live_Oak.JPG",
   "description": "Tree in Drexel Park, Valdosta, Lowndes County, Georgia"
- },
- {
-  "file": "Historic_Oak_GCT.jpg",
-  "title": "File:Historic Oak GCT.jpg",
-  "author": "Amaddy82",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Historic_Oak_GCT.jpg",
-  "description": "In honor of National Arbor Day, community members joined Georgia Ports Authority officials to plant a young live oak at the Port of Savannah\u2019s Garden City Termi"
- },
- {
-  "file": "Lebanon_Plantation_Live_Oak.jpg",
-  "title": "File:Lebanon Plantation Live Oak.jpg",
-  "author": "Kevinakling",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Lebanon_Plantation_Live_Oak.jpg",
-  "description": "Lebanon Plantation Live Oak in Savannah, GA"
  },
  {
   "file": "Tallahassee_FL_Lichgate_Oak02.jpg",
@@ -424,124 +304,12 @@
   "description": "Live oak avenue at Charles Towne Landing in Charleston, South Carolina, USA.  This avenue stands in front of the Legare-Waring House."
  },
  {
-  "file": "Hammond_Oak_2023-12-26.jpg",
-  "title": "File:Hammond Oak 2023-12-26.jpg",
-  "author": "Tcr25",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Hammond_Oak_2023-12-26.jpg",
-  "description": "The Hammond Oak (a Southern Live Oak, Quercus virginiana) in Hammond, Louisiana. Much of the branches are covered with resurrection ferns (Pleopeltis polypodioi"
- },
- {
   "file": "Honey_Horn_live_oaks_Hilton_Head_Island_South_Carolina.jpg",
   "title": "File:Honey Horn live oaks, Hilton Head Island, South Carolina.jpg",
   "author": "FranzKafkasWiki",
   "license": "CC BY 4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Honey_Horn_live_oaks,_Hilton_Head_Island,_South_Carolina.jpg",
   "description": "Mature live oak trees (Quercus virginiana) draped with Spanish moss (Tillandsia usneoides) on the grounds of Honey Horn, home of the Coastal Discovery Museum, H"
- },
- {
-  "file": "LSU_Parade_Ground_Quercus_Virginiana_Limbs_and_Trunk.jpg",
-  "title": "File:LSU Parade Ground, Quercus Virginiana Limbs and Trunk.jpg",
-  "author": "Spatms",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:LSU_Parade_Ground,_Quercus_Virginiana_Limbs_and_Trunk.jpg",
-  "description": "LSU Parade Ground, Quercus Virginiana Limbs and Trunk"
- },
- {
-  "file": "LSU_Parade_Ground_Quercus_Virginiana_Trunk.jpg",
-  "title": "File:LSU Parade Ground, Quercus Virginiana Trunk.jpg",
-  "author": "Spatms",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:LSU_Parade_Ground,_Quercus_Virginiana_Trunk.jpg",
-  "description": "LSU Parade Ground, Quercus Virginiana Trunk"
- },
- {
-  "file": "Live_Oak_Alley.jpg",
-  "title": "File:Live Oak Alley.jpg",
-  "author": "No machine-readable author provided. Doug Coldwell assumed (based on copyright claims).",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Live_Oak_Alley.jpg",
-  "description": "Took picture myself."
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_05.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 05.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_05.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_07.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 07.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_07.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_08.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 08.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_08.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_09.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 09.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_09.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_10.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 10.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_10.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_11.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 11.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_11.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_12.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 12.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_12.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_13.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 13.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_13.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_14.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 14.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_14.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Southern_Live_Oak_in_Columbia_SC.jpg",
-  "title": "File:Southern Live Oak in Columbia, SC.jpg",
-  "author": "Thomas Kirchel",
-  "license": "CC0",
-  "source": "https://commons.wikimedia.org/wiki/File:Southern_Live_Oak_in_Columbia,_SC.jpg",
-  "description": "A Southern Live Oak tree on the grounds of Midlands Technical College - Beltline Campus in Columbia, South Carolina"
  },
  {
   "file": "Washington-oak-hampton-sc1.jpg",
@@ -576,222 +344,6 @@
   "description": "Spanish moss on a Live Oak within Brazos Bend State Park in Fort Bend County, Texas"
  },
  {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_15.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 15.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_15.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_16.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 16.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_16.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_17.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 17.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_17.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_18.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 18.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_18.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_19.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 19.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_19.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_20.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 20.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_20.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_21.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 21.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_21.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_22.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 22.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_22.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_23.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 23.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_23.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_24.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 24.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_24.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_25.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 25.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_25.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_26.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 26.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_26.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_27.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 27.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_27.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_28.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 28.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_28.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_29.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 29.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_29.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_30.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 30.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_30.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_31.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 31.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_31.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_32.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 32.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_32.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_33.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 33.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_33.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_35.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 35.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_35.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_37.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 37.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_37.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_38.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 38.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_38.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_39.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 39.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_39.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_40.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 40.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_40.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_44.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 44.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_44.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_45.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 45.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_45.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
-  "file": "Northline_Street_Metairie_Louisiana_17_February_2025_-_46.jpg",
-  "title": "File:Northline Street, Metairie, Louisiana, 17 February 2025 - 46.jpg",
-  "author": "Infrogmation",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Northline_Street,_Metairie,_Louisiana,_17_February_2025_-_46.jpg",
-  "description": "Northline Street was developed in 1929, part of the upscale Metairie Club Gardens development between Old Metairie and Metairie Country Club.  The oak lined str"
- },
- {
   "file": "Oak_Alley_Plantation_2007.jpg",
   "title": "File:Oak Alley Plantation 2007.jpg",
   "author": "Ronar",
@@ -800,60 +352,12 @@
   "description": "Oak Alley Plantation, Vacherie, Louisiana, USA, Quercus virginiana trees"
  },
  {
-  "file": "Oakalleyplantation.jpg",
-  "title": "File:Oakalleyplantation.jpg",
-  "author": "Rolf M\u00fcller (User:Rolfmueller)",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Oakalleyplantation.jpg",
-  "description": "Photograph of Oak Alley Plantation in Vacherie, Louisiana, United States of America from the direction of the Mississippi River taken by Rolf M\u00fcller on December"
- },
- {
-  "file": "Old_Jefferson_Jefferson_Parish_Louisiana_Jan_2018_32.jpg",
-  "title": "File:Old Jefferson Jefferson Parish Louisiana Jan 2018 32.jpg",
-  "author": "Infrogmation of New Orleans",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Old_Jefferson_Jefferson_Parish_Louisiana_Jan_2018_32.jpg",
-  "description": "Old Jefferson, Jefferson Parish, Louisiana. Sundorn &amp; Claiborne Court."
- },
- {
-  "file": "Old_Jefferson_LA_Berwick_St_Oct_2017_6.jpg",
-  "title": "File:Old Jefferson LA Berwick St Oct 2017 6.jpg",
-  "author": "Infrogmation of New Orleans",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Old_Jefferson_LA_Berwick_St_Oct_2017_6.jpg",
-  "description": "Residential section of Old Jefferson, Louisiana. \n\nPhoto by Infrogmation of New Orleans, October, 2017. Free reuse with attribution in accordance with cc-by-sa-"
- },
- {
   "file": "Quercus_virginiana-440351.jpg",
   "title": "File:Quercus virginiana-440351.jpg",
   "author": "JamesDeMers",
   "license": "CC0",
   "source": "https://commons.wikimedia.org/wiki/File:Quercus_virginiana-440351.jpg",
   "description": "Virginia live oak with resurrection ferns"
- },
- {
-  "file": "Seven_Sisters_Oak.jpg",
-  "title": "File:Seven Sisters Oak.jpg",
-  "author": "Williamguion98",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Seven_Sisters_Oak.jpg",
-  "description": "View from east side of tree, with home of current owners in background."
- },
- {
-  "file": "Southeastern_spreading_Friendship_Oak.jpg",
-  "title": "File:Southeastern spreading Friendship Oak.JPG",
-  "author": "Richard David Ramsey",
-  "license": "Public domain",
-  "source": "https://commons.wikimedia.org/wiki/File:Southeastern_spreading_Friendship_Oak.JPG",
-  "description": "Friendship Circle on the campus of Southeastern Louisiana University is dominated by Friendship Oak. This tree is hundreds of years old. Like other mature sprea"
- },
- {
-  "file": "View_from_Oak_Alley_Plantation_house.jpg",
-  "title": "File:View from Oak Alley Plantation house.jpg",
-  "author": "Yair Haklai",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:View_from_Oak_Alley_Plantation_house.jpg",
-  "description": "View from Oak Alley Plantation house"
  },
  {
   "file": "1010_Government_Street.jpg",
@@ -928,14 +432,6 @@
   "description": "Barton Academy in Mobile, Alabama.  Partially obscured by live oaks (Quercus virginiana)."
  },
  {
-  "file": "Big_Tree_Texas_2024.jpg",
-  "title": "File:Big Tree Texas 2024.jpg",
-  "author": "Larry D. Moore",
-  "license": "CC BY 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Big_Tree_Texas_2024.jpg",
-  "description": "The Big Tree at Goose Island State Park north of Rockport, Texas, United States is estimated to be over 1000 years old and has a trunk circumference over 35 fee"
- },
- {
   "file": "Big_tree.jpg",
   "title": "File:Big tree.jpg",
   "author": "Larry D. Moore",
@@ -944,44 +440,12 @@
   "description": "The Big Tree at Goose Island State Park north of Rockport, Texas, United States is estimated to be over 1000 years old and has a trunk circumference over 35 fee"
  },
  {
-  "file": "Boyington_Oak_in_Mobile.jpg",
-  "title": "File:Boyington Oak in Mobile.jpg",
-  "author": "Altairisfar",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Boyington_Oak_in_Mobile.jpg",
-  "description": "The Boyington Oak next to Church Street Cemetery in Mobile, Alabama."
- },
- {
-  "file": "Cabinet_Oak_LBJ_Ranch_2023.jpg",
-  "title": "File:Cabinet Oak LBJ Ranch 2023.jpg",
-  "author": "Larry D. Moore",
-  "license": "CC BY 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Cabinet_Oak_LBJ_Ranch_2023.jpg",
-  "description": "The \"Cabinet Oak\" Tree at the LBJ Ranch. Lyndon B. Johnson held meetings under the tree during his presidency."
- },
- {
-  "file": "Century_Tree.jpg",
-  "title": "File:Century Tree.jpg",
-  "author": "Ed Schipul",
-  "license": "CC BY-SA 2.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Century_Tree.jpg",
-  "description": "The Century Tree (or the Century Oak) on the campus of Texas A&amp;M University in College Station, Texas. The tree was one of the first trees planted on the ca"
- },
- {
   "file": "Constitution_Oak_in_Geneva_Alabama.jpg",
   "title": "File:Constitution Oak in Geneva, Alabama.jpg",
   "author": "AlabamaGuy2007 at English Wikipedia",
   "license": "Public domain",
   "source": "https://commons.wikimedia.org/wiki/File:Constitution_Oak_in_Geneva,_Alabama.jpg",
   "description": "The Constitution Oak, a live oak tree in Geneva, Alabama believed to be one of the oldest and largest trees in the state."
- },
- {
-  "file": "House_and_tree_seguin.jpg",
-  "title": "File:House and tree seguin.jpg",
-  "author": "Larry D. Moore",
-  "license": "CC BY 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:House_and_tree_seguin.jpg",
-  "description": "Former home of Max Starcke, mayor of Seguin, Texas, United States (1928 to 1938), and the oak under which a group of Rangers signed the Charter in 1838, foundin"
  },
  {
   "file": "Jackson_s_Oak.jpg",
@@ -1008,22 +472,6 @@
   "description": "La pointe de Grave (en occitan\u00a0: punta de Grava) est un cap marquant l'extr\u00e9mit\u00e9 septentrionale du M\u00e9doc, du d\u00e9partement de la Gironde et de la r\u00e9gion Aquitaine"
  },
  {
-  "file": "Live_oak_tree_outside_LBJ_Ranch_IMG_1511.jpg",
-  "title": "File:Live oak tree outside LBJ Ranch IMG 1511.JPG",
-  "author": "Billy Hathorn",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Live_oak_tree_outside_LBJ_Ranch_IMG_1511.JPG",
-  "description": "I took photo of large live oak tree outside LBJ Ranch near Stonewall, TX."
- },
- {
-  "file": "Oak_at_Faulker_State-Fairhope_Sept_2012.jpg",
-  "title": "File:Oak at Faulker State-Fairhope Sept 2012.jpg",
-  "author": "Chris Pruitt",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Oak_at_Faulker_State-Fairhope_Sept_2012.jpg",
-  "description": "An oak tree on the campus of Faulkner State Community College's Fairhope Campus in Fairhope, Alabama"
- },
- {
   "file": "Oak_at_the_Protestant_Children_s_Home_Sept_2012.jpg",
   "title": "File:Oak at the Protestant Children's Home Sept 2012.jpg",
   "author": "Chris Pruitt",
@@ -1032,36 +480,12 @@
   "description": "An oak tree outside the Protestant Children's Home in Mobile, Alabama"
  },
  {
-  "file": "Oak_tree-SL.jpg",
-  "title": "File:Oak tree-SL.jpg",
-  "author": "Shawn Lea from Jackson, MS, US",
-  "license": "CC BY 2.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Oak_tree-SL.jpg",
-  "description": "Oak tree: Point Clear, Ala."
- },
- {
   "file": "Oaks_trees_Quercus_and_wildflowers_Nockenut_Road_Guadalupe_County_Texas_USA_6_Oc.jpg",
   "title": "File:Oaks trees (Quercus) and wildflowers, Nockenut Road, Guadalupe County, Texas, USA (6 October 2018).jpg",
   "author": "William L. Farr",
   "license": "CC BY-SA 4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Oaks_trees_(Quercus)_and_wildflowers,_Nockenut_Road,_Guadalupe_County,_Texas,_USA_(6_October_2018).jpg",
   "description": "Oaks trees (Quercus) and wildflowers growing in the East Central Texas forests (Southern Post Oak Savannah) ecoregion of Texas, Nockenut Road [County Road 421] "
- },
- {
-  "file": "Old_Evergreen_Tree_Lee_County_Texas_2018.jpg",
-  "title": "File:Old Evergreen Tree Lee County Texas 2018.jpg",
-  "author": "Larry D. Moore",
-  "license": "CC BY 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Old_Evergreen_Tree_Lee_County_Texas_2018.jpg",
-  "description": "The Old Evergreen Tree in Lee County, Texas, United States may have sheltered explorer Louis de St. Denis in 1714. Recorded Texas Historic Landmark - 1967"
- },
- {
-  "file": "Old_Evergreen_Tree_Lee_County_Texas_2021.jpg",
-  "title": "File:Old Evergreen Tree Lee County Texas 2021.jpg",
-  "author": "Larry D. Moore",
-  "license": "CC BY 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Old_Evergreen_Tree_Lee_County_Texas_2021.jpg",
-  "description": "Old Evergreen Tree in Lee County near Lincoln, Texas, United States. The tree was designated a Recorded Texas Historic Landmark in 1967. Marker text: \"Said to h"
  },
  {
   "file": "Quercus_virginiana_hybrid.jpg",
@@ -1086,22 +510,6 @@
   "license": "Public domain",
   "source": "https://commons.wikimedia.org/wiki/File:Sunset_at_Mud_Hen_Lake_(Fort_Ord)_(52979572518).jpg",
   "description": "In the heart of California's Central Coast, the Fort Ord National Monument encompasses a sweeping landscape of vivid beauty and rich natural diversity. One of t"
- },
- {
-  "file": "Texas_A_M_University_Chemistry_Building.jpg",
-  "title": "File:Texas A&M University Chemistry Building.jpg",
-  "author": "Jasonanaggie",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Texas_A%26M_University_Chemistry_Building.jpg",
-  "description": "Texas A&amp;M University Chemistry Building and Fountain Plaza"
- },
- {
-  "file": "Texas_Live_Oak_Quercus_fusiformis.jpg",
-  "title": "File:Texas Live Oak Quercus fusiformis.jpg",
-  "author": "Rei at English Wikipedia",
-  "license": "CC BY-SA 3.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Texas_Live_Oak_Quercus_fusiformis.jpg",
-  "description": "An old southern live oak at the Alamo.\nPhoto taken by me, July 2006."
  },
  {
   "file": "Texas_Viewscape_2008.jpg",
@@ -1328,14 +736,6 @@
   "description": "Hypericum sp. blooming in the oak scrub at Juno Dunes Natural Area, Palm Beach County, Florida. Still a little morning dew."
  },
  {
-  "file": "Live_Oak_Way_Jekyll_Island_Pier.jpg",
-  "title": "File:Live Oak Way Jekyll Island Pier.jpg",
-  "author": "MirtR",
-  "license": "CC BY-SA 4.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Live_Oak_Way_Jekyll_Island_Pier.jpg",
-  "description": "The road to the pier at Jekyll Island lined with Live oaks."
- },
- {
   "file": "Live_oak_and_spanish_moss.jpg",
   "title": "File:Live oak and spanish moss.jpg",
   "author": "San906",
@@ -1366,22 +766,6 @@
   "license": "CC BY 2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Spanish_moss_in_live_oak_-_Flickr_-_pellaea.jpg",
   "description": "Trail to Arbuckle Lake, Lake Wales Ridge State Forest, Florida, 20110406"
- },
- {
-  "file": "Spanish_moss_on_the_live_oaks_from_Robert_N._Dennis_collection_of_stereoscopic_v.jpg",
-  "title": "File:Spanish moss on the live oaks, from Robert N. Dennis collection of stereoscopic views.jpg",
-  "author": "Unknown artistUnknown artist",
-  "license": "Public domain",
-  "source": "https://commons.wikimedia.org/wiki/File:Spanish_moss_on_the_live_oaks,_from_Robert_N._Dennis_collection_of_stereoscopic_views.jpg",
-  "description": ""
- },
- {
-  "file": "Spanish_moss_on_the_live_oaks_from_Robert_N._Dennis_collection_of_stereoscopic_v.jpg",
-  "title": "File:Spanish moss on the live oaks, from Robert N. Dennis collection of stereoscopic views.png",
-  "author": "Unknown artistUnknown artist",
-  "license": "Public domain",
-  "source": "https://commons.wikimedia.org/wiki/File:Spanish_moss_on_the_live_oaks,_from_Robert_N._Dennis_collection_of_stereoscopic_views.png",
-  "description": ""
  },
  {
   "file": "Turkey_at_Fort_Ord_National_Monument_52991626503_.jpg",
@@ -1832,14 +1216,6 @@
   "description": "Quercus geminata"
  },
  {
-  "file": "Quercus_geminata_24076052211_.jpg",
-  "title": "File:Quercus geminata (24076052211).jpg",
-  "author": "Bruce Kirchoff from Greensboro, NC, USA",
-  "license": "CC BY 2.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Quercus_geminata_(24076052211).jpg",
-  "description": "Quercus geminata"
- },
- {
   "file": "Quercus_geminata_24107692761_.jpg",
   "title": "File:Quercus geminata (24107692761).jpg",
   "author": "Bruce Kirchoff from Greensboro, NC, USA",
@@ -1861,14 +1237,6 @@
   "author": "Bruce Kirchoff from Greensboro, NC, USA",
   "license": "CC BY 2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Quercus_geminata_(24143749385).jpg",
-  "description": "Quercus geminata"
- },
- {
-  "file": "Quercus_geminata_24154741366_.jpg",
-  "title": "File:Quercus geminata (24154741366).jpg",
-  "author": "Bruce Kirchoff from Greensboro, NC, USA",
-  "license": "CC BY 2.0",
-  "source": "https://commons.wikimedia.org/wiki/File:Quercus_geminata_(24154741366).jpg",
   "description": "Quercus geminata"
  },
  {

@@ -19,3 +19,7 @@ assets/hdri/*_4k.hdr
 meshy/Meshy_AI_Whispering_Oak_*.glb
 
 node_modules/
+
+# PBase photos: copyrighted, kept as local reference only (never published)
+photos/pbase-reference/
+photos/manifest.local.json

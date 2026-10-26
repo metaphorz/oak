@@ -177,8 +177,9 @@ export function lightField(pos, pond) {
 // `alpha` is the world-horizontal angle of a surface point around the trunk.
 // Duplicated verbatim in blender/build_oak.py — keep the two in sync.
 export function flareScale(p, y, alpha, trunkR, ageF) {
-  const h = 0.25 + 0.7 * trunkR;
-  const F = (0.25 + 1.25 * p.rootFlare) * Math.exp(-Math.max(0, y) / h) * ageF;
+  // A short root collar where the roots meet the trunk, not a tall cone.
+  const h = 0.15 + 0.3 * trunkR;
+  const F = (0.1 + 0.55 * p.rootFlare) * Math.exp(-Math.max(0, y) / h) * ageF;
   const axis = Math.atan2(-Math.cos(THREE.MathUtils.degToRad(p.windDir)), Math.sin(THREE.MathUtils.degToRad(p.windDir)));
   const c = Math.cos(alpha - axis);
   const w = p.buttress * p.windStrength;
@@ -221,7 +222,7 @@ export function generateOak(p, opts = {}) {
   bendToward(trunkDir, wind.lee, lean * 0.3); // the rest accrues as curvature
   queue.push({
     id: 1, level: 0, birth: 0, origin: new THREE.Vector3(0, -0.4, 0), dir: trunkDir, parent: -1, joint: 0,
-    maxLen: p.trunkLength + 0.4, radius: trunkR, parentRadius: trunkR,
+    maxLen: p.trunkLength * (1 - 0.65 * (p.lowSplit ?? 0)) + 0.4, radius: trunkR, parentRadius: trunkR,
   });
 
   while (queue.length) {
@@ -284,7 +285,8 @@ export function generateOak(p, opts = {}) {
     const radii = [b.radius];
     const dirs = [dir.clone()];
     // Live oak limbs stay thick for a long way (low taper).
-    const taper = lvl === 0 ? 0.35 : isTwig ? 0.92 : lvl === 1 ? 0.5 : 0.62;
+    // A live oak trunk is close to a cylinder, never a tapering cone.
+    const taper = lvl === 0 ? 0.06 : isTwig ? 0.92 : lvl === 1 ? 0.5 : 0.62;
     let pruned = false;
 
     // Limbs heading toward open water get more light: longer, lower, and they
@@ -471,7 +473,9 @@ export function generateOak(p, opts = {}) {
     let childCount = 0;
     if (lvl < p.levels && !b.hedge) {
       const count = lvl === 0 ? p.limbCount : lvl === 1 ? p.children + 3 : p.children + Math.round(2.5 * full);
-      const startFrac = lvl === 0 ? clamp(p.trunkHeight / Math.max(0.5, p.trunkLength), 0.04, 0.95) : 0.18;
+      const split = p.lowSplit ?? 0;
+      const trunkLen = p.trunkLength * (1 - 0.65 * split);
+      const startFrac = lvl === 0 ? clamp((p.trunkHeight * (1 - 0.6 * split)) / Math.max(0.5, trunkLen), 0.04, 0.95) : 0.18;
       const builtLen = segLen * (pts.length - 1);
       const radial0 = rng() * Math.PI * 2;
       for (let c = 0; c < count; c++) {
@@ -529,7 +533,10 @@ export function generateOak(p, opts = {}) {
         let radius;
         if (lvl === 0) {
           maxLen = p.limbLength * crng.range(0.75, 1.15) * (1 - 0.25 * (s - startFrac));
-          radius = Math.max(0.02, pr * (fork ? (c === count - 2 ? 0.8 : 0.68) : (p.radiusRatio + 0.08) * crng.range(0.7, 1.05)));
+          // Low division: the first limbs are trunk-sized, so there is no
+          // obvious single trunk (common in big open-grown live oaks).
+          radius = Math.max(0.02, pr * (fork ? (c === count - 2 ? 0.8 : 0.68)
+            : Math.min(0.85, (p.radiusRatio + 0.08 + 0.3 * split) * crng.range(0.7, 1.05))));
         } else {
           maxLen = b.maxLen * p.lengthRatio * crng.range(0.7, 1.1) * (1 - 0.45 * s);
           radius = Math.max(0.006, pr * p.radiusRatio * crng.range(0.8, 1));

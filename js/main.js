@@ -96,10 +96,17 @@ function rebuild(quality = params.quality) {
     meshes.skeleton = buildSkeletonLines(skeleton);
     tree.add(meshes.skeleton);
   }
-  for (const m of [bark, leaves, moss]) m.visible = !params.showSkeleton;
+  applyVisibility();
   updateEnvironment(env, scene, renderer, params, skeleton);
   if (quality !== 'draft' || !understory) rebuildUnderstory();
   updateStats();
+}
+
+function applyVisibility() {
+  if (!meshes.bark) return;
+  meshes.bark.visible = !params.showSkeleton;
+  meshes.leaves.visible = !params.showSkeleton && params.showLeaves !== false;
+  meshes.moss.visible = !params.showSkeleton && params.showMoss !== false;
 }
 
 // The bare graph: each branch is a chain of joints; colour = branch order.
@@ -127,7 +134,7 @@ function buildSkeletonLines(sk) {
 
 // Keys that only touch materials or scene dressing — no regrowth needed.
 const LIGHT_KEYS = new Set([
-  'barkScars', 'lichen', 'limbMoss', 'barkDarkness', 'leafDarkness', 'leafGloss', 'leafVariation', 'translucency',
+  'showLeaves', 'showMoss', 'barkScars', 'lichen', 'limbMoss', 'barkDarkness', 'leafDarkness', 'leafGloss', 'leafVariation', 'translucency',
   'mossTone', 'sway', 'showShear', 'showSpray', 'showArrow', 'timeOfDay', 'ground', 'showOcean',
   'fog', 'exposure', 'barkSet', 'understory', 'atmosphere',
 ]);
@@ -156,6 +163,11 @@ function onParam(key, value, final) {
 }
 
 function applyLight(key) {
+  if (key === 'showLeaves' || key === 'showMoss') {
+    applyVisibility();
+    markEngineStale();
+    return;
+  }
   if (key === 'barkSet') {
     barkMat.dispose();
     barkMat = createBarkMaterial(params);
@@ -274,7 +286,8 @@ $('ref-meshy').addEventListener('change', async (e) => {
 // (photos/manifest.json). Any photo can be pinned beside the viewer for
 // side-by-side checking while adjusting sliders.
 const CATS = { all: 'All', field: 'Field photos', form: 'Tree form', 'salt-and-coast': 'Salt & coast',
-  'sand-live-oak': 'Sand live oak', 'spanish-moss': 'Spanish moss', bark: 'Bark', leaves: 'Leaves' };
+  'sand-live-oak': 'Sand live oak', 'spanish-moss': 'Spanish moss', bark: 'Bark', leaves: 'Leaves',
+  pbase: 'Live Oak Society (local only)' };
 let photos = [];
 let lightboxItem = null;
 function renderGallery(cat) {
@@ -309,8 +322,14 @@ function renderGallery(cat) {
     gal.appendChild(fig);
   }
 }
-fetch('photos/manifest.json').then((r) => r.json()).then((list) => {
-  photos = list;
+// photos/manifest.local.json lists copyrighted reference photos kept only on
+// this machine (git-ignored); on GitHub Pages it is simply absent.
+Promise.all([
+  fetch('photos/manifest.json').then((r) => r.json()),
+  fetch('photos/manifest.local.json').then((r) => (r.ok ? r.json() : [])).catch(() => []),
+]).then(([list, local]) => {
+  photos = [...list, ...local];
+  list = photos;
   const tabs = $('gallery-tabs');
   for (const [k, label] of Object.entries(CATS)) {
     const n = k === 'all' ? list.length : list.filter((x) => x.category === k).length;
@@ -406,7 +425,12 @@ function markEngineStale() {
 async function buildPayload(extra) {
   const sun = sunDirection(params.timeOfDay).toArray();
   return {
-    skeleton: skeletonToJSON(generateOak(params, { quality: 'ultra' })),
+    skeleton: (() => {
+      const sk = skeletonToJSON(generateOak(params, { quality: 'ultra' }));
+      if (params.showLeaves === false) sk.leaves = [];
+      if (params.showMoss === false) sk.moss = [];
+      return sk;
+    })(),
     camera: cameraInfo(),
     sun,
     mossTexture: mossTex.image.toDataURL('image/png'),

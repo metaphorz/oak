@@ -88,7 +88,14 @@ photos in `photos/web/` (credits in `photos/web/CREDITS.md`). The main traits it
 - foliage forming a roof over bare inner limbs, which the model handles as interior shading.
 
 In the app, open **Reference photos** and pin any photo beside the viewer to compare while you
-adjust sliders.
+adjust sliders. Photos showing houses, streets, poles, cars or fences were removed so the
+references show trees only.
+
+When run locally, the gallery also includes a **Live Oak Society** tab: 30 photos from Coleen
+Perilloux Landry's PBase gallery
+([pbase.com/septembermorn/the_live_oak_tree](https://pbase.com/septembermorn/the_live_oak_tree)).
+They are copyrighted, kept on this machine as reference only (`photos/pbase-reference/`, which git
+ignores), and are never published to GitHub Pages.
 
 ### Low limbs, water and canopy fullness
 - **Low limb clearance** (m) sets how high the lowest limbs stay. At 0, heavy limbs can rest an
@@ -114,6 +121,18 @@ The pond behaviour comes out of the same rule. Measured on the pond preset:
 | 0.5 | 21.8 m | 163 |
 
 On the sheltered tree, south-side leaves grow from 51% to 59% as Light seeking goes from 0 to 1.
+
+### Trunk form
+Large live oaks don't have a tapering, cone-shaped base. The trunk is close to a cylinder with a
+short root collar where the roots meet it. Often it divides near the ground into several massive,
+trunk-sized limbs, with no obvious single trunk.
+- **Low division** sets how close to the ground that split happens and how massive the first limbs
+  are.
+- **Root collar** sets the short swelling at the very base.
+- **Show leaves** and **Show Spanish moss** (under *Foliage*) hide those layers to show the
+  structure. Blender and Unreal follow these toggles.
+
+![Trunk forms](docs/images/trunk_forms.jpg)
 
 ### Atmosphere, bark and roots
 - **Atmosphere** (under *Environment*) offers seven skies: clear, golden hour, overcast, morning
